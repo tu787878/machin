@@ -85,13 +85,17 @@ function add_to_card(){
     global $wpdb;
 
     $table = "wp_machin_order_data";
-    $status = $wpdb->query("INSERT INTO $table (order_id, price, type_pcb, width, height, quantity, layers, type_order, dichte, dichte_done, distant, size_khoan, color, text_color, interface, test, note) VALUES ('". $data['order_id'] ."', ". $data['price'] .", '". $data['type_pcb'] ."', '". $data['width'] ."', '". $data['height'] ."', '". $data['quantity'] ."', '". $data['layers'] ."', '". $data['type_order'] ."', '". $data['dichte'] ."', '". $data['dichte_done'] ."', '". $data['distant'] ."', '". $data['size_khoan'] ."', '". $data['color'] ."', '". $data['text_color'] ."', '". $data['interface'] ."', '". $data['test'] ."', '". $data['note'] ."')");
+    $status = $wpdb->query("INSERT INTO $table (order_id, price, type_pcb, width, height, quantity, layers, type_order, dichte, dichte_done, distant, size_khoan, color, text_color, interface, test, note, file) VALUES ('". $data['order_id'] ."', ". $data['price'] .", '". $data['type_pcb'] ."', '". $data['width'] ."', '". $data['height'] ."', '". $data['quantity'] ."', '". $data['layers'] ."', '". $data['type_order'] ."', '". $data['dichte'] ."', '". $data['dichte_done'] ."', '". $data['distant'] ."', '". $data['size_khoan'] ."', '". $data['color'] ."', '". $data['text_color'] ."', '". $data['interface'] ."', '". $data['test'] ."', '". $data['note'] ."', '". $data['file'] ."')");
     if($data['isStencil'] == 1){
         $wpdb->query("UPDATE $table SET loai_stencil = '". $data['stencil']['loai_stencil'] ."', danh_bong = '". $data['stencil']['danh_bong'] ."', mat_stencil = '". $data['stencil']['mat_stencil'] ."', kich_thuoc = '". $data['stencil']['kich_thuoc'] ."', quantity_2 = '".  $data['stencil']['quantity_2'] ."', do_day = '". $data['stencil']['do_day']  ."', note_2 = '".  $data['stencil']['note_2'] ."', isStencil = 1 WHERE order_id = '". $data['order_id']  ."'");
     }
 
     if($data['isAssembly'] == 1){
         $wpdb->query("UPDATE $table SET side = '". $data['assembly']['side'] ."', diem_han_smd = '". $data['assembly']['diem_han_smd'] ."', diem_han_dip = '". $data['assembly']['diem_han_dip'] ."', linh_kien_dan = '". $data['assembly']['linh_kien_dan'] ."', linh_kien_gan = '". $data['assembly']['linh_kien_gan'] ."', dong_goi = '". $data['assembly']['dong_goi'] ."', xac_nhan = '". $data['assembly']['xac_nhan'] ."', height_2 = '". $data['assembly']['height_2'] ."', width_2 = '". $data['assembly']['width_2'] ."', isAssembly = 1 WHERE order_id = '". $data['order_id'] ."'");
+    }
+
+    if($data['panel'] == 1){
+        $wpdb->query("UPDATE $table SET panel = 1, col_panel = '". $data['col_panel'] ."', row_panel = '". $data['row_panel'] ."', vien = '". $data['vien'] ."' WHERE order_id = '". $data['order_id'] ."'");
     }
     echo json_encode($status);
     die();
@@ -147,3 +151,64 @@ function my_admin_style() {
 
 //         $woocommerce->cart->empty_cart(); 
 // }
+
+function my_admin_menu() {
+    add_menu_page(
+        'Mạch in',
+        'Mạch in',
+        'manage_options',
+        'machin-page',
+        'my_admin_page_contents',
+        'dashicons-schedule',
+        3
+    );
+
+    // add_menu_page('Mạch 1 lớp', 'Mạch 1 lớp', 'manage_options', 'machin-page', 'mach_1_lop');
+
+    add_submenu_page( 'machin-page', 'Mạch 1 lớp', 'Mạch 1 lớp',
+    'manage_options', 'mach-1-lop', 'mach_1_lop');
+
+    add_submenu_page( 'machin-page', 'Mạch 2 lớp', 'Mạch 2 lớp',
+    'manage_options', 'mach-2-lop', 'mach_2_lop');
+
+    add_submenu_page( 'machin-page', 'Mạch 4 lớp', 'Mạch 4 lớp',
+    'manage_options', 'mach-4-lop', 'mach_4_lop');
+
+    add_submenu_page( 'machin-page', 'Mạch 6 lớp', 'Mạch 6 lớp',
+    'manage_options', 'mach-6-lop', 'mach_6_lop');
+
+    add_submenu_page( 'machin-page', 'Mạch ALU', 'Mạch ALU',
+    'manage_options', 'mach-alu', 'mach_alu');
+
+}
+
+add_action( 'admin_menu', 'my_admin_menu' );
+
+
+function my_admin_page_contents() {
+    include plugin_dir_path(__FILE__) . "/inc/setting.php";
+}
+
+
+function mach_1_lop(){
+    include plugin_dir_path(__FILE__) . "/inc/1lop.php";
+}
+
+function mach_2_lop(){
+    include plugin_dir_path(__FILE__) . "/inc/2lop.php";
+}
+
+function mach_4_lop(){
+    include plugin_dir_path(__FILE__) . "/inc/4lop.php";
+}
+
+function mach_6_lop(){
+    include plugin_dir_path(__FILE__) . "/inc/6lop.php";
+}
+
+function mach_alu(){
+    include plugin_dir_path(__FILE__) . "/inc/alu.php";
+}
+
+// add_submenu_page( 'my-top-level-slug', 'My Custom Submenu Page', 'My Custom Submenu Page',
+//     'manage_options', 'my-secondary-slug');

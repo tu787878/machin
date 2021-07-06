@@ -33,10 +33,11 @@ $(document).ready(function(){
     var arrClass = [
         'productTypeId','layerId','orderTypeId','thicknessPcbId','finishedCopperId',
         'minSpacingId','minHoleSizeId','solderMaskId', 'silkscreenColorId', 'surfaceFinishId','testMethodId','stencilTypeId','electropolishingId','stencilSideId',
-    'thicknessSmdId'];
+    'thicknessSmdId', 'vien'];
 
     $.each( arrClass, function( i, item ){
         $("body").on('click', 'li.'+item, function(){
+
             $('li.'+item).find('label').removeClass('choose');
             $('li.'+item).find('label').find('i').remove();
             $('li.'+item).find('label input').attr('checked',false);
@@ -44,10 +45,13 @@ $(document).ready(function(){
             $(this).find('label').addClass('choose');
             $(this).find('label').append(`<i class="jp-ico subscript-ico"></i>`);
             var leadTime = parseInt($('input[name="LeadTime"]:checked').val());
+
             if($(this).attr('class') == 'd-inline-block productTypeId') {
                 var productTypeId = parseInt($(this).find('label').find('input').val());
                 changeDataTotal(productTypeId, height, width, price, price_2, quantity, leadTime, transportId);
             }
+
+
             return false;
         });
     });

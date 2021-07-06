@@ -3,7 +3,9 @@ function test() {
 
 
 }
-
+window.onbeforeunload = function () {
+    console.log("hi");
+};
 
 // ***************
 
@@ -14,17 +16,27 @@ function togleShowmore() {
 var layers;
 var all;
 
-
+function beautifulName(name) {
+    name = name.replace(all.file_folder + "/", "");
+    return name;
+}
 
 function changeLayers() {
+    $('.choose_color').val("green");
     $('.my-preview').show();
-    $('.my-preview .ct .right').html("");
+    $('.my-preview .ct .right .options').html("");
     for (let index = 0; index < layers.length; index++) {
+        console.log();
         const layer = layers[index];
-        console.log(layer);
-        if(layer.side != null && layer.type != null){
-            $('.my-preview .ct .right').append(`<label for="name">` + layer.filename + `</label>
-            <input type="checkbox" class="input_file_layer" value="`+ index + `" checked name="file_layer" id="file_` + layer.filename + `">`);
+        if (layer.type == "outline") {
+            $('#width_upload_board').val(layer.converter.width.toFixed(2));
+            $('#height_upload_board').val(layer.converter.height.toFixed(2));
+            $('#units_upload_board').val(layer.converter.units);
+            $('#chieu_cao_mach').html(layer.converter.height.toFixed(2));
+            $('#chieu_rong_mach').html(layer.converter.width.toFixed(2));
+        }
+        if (layer.side != null && layer.type != null && (layer.side == "all" || layer.side == "top") && layer.type != "outline") {
+            $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" checked name="file_layer" id="file_` + layer.filename + `"><label for="name">"` + beautifulName(layer.filename) + `"</label></div>`);
         }
     }
     // layers.forEach((layer) => {
@@ -48,31 +60,53 @@ function changeLayers() {
         out: '#000',
     }
 
+    let new_layers = [];
+    let checkeds = $('input[name="file_layer"]:checked');
 
-    var stackup = pcbStackupCore(layers, { id: 'tudc', color: DEFAULT_COLOR, useOutline: true });
-    // $('.preview1').html(stackup.top.svg);
-    // $('.preview2').html(stackup.bottom.svg);
+    for (let index = 0; index < checkeds.length; index++) {
+        const checked = checkeds.get(index);
+        new_layers.push(layers[checked.value]);
+    }
+
+    var stackup = pcbStackupCore(new_layers, { id: 'tudc', color: DEFAULT_COLOR, useOutline: true });
     $('.preview1').html(stackup.top.svg);
-    // $('.preview2').html(stackup.bottom.svg);
     var panZoomTiger = svgPanZoom('#tudc_top');
-    // var panZoomTiger2 = svgPanZoom('#tudc_bottom');
     $('.preview22').hide();
     $('.input_file_layer').change(function (e) {
         toggleLayer();
     });
 
-    $('input[type=radio][name=choose_side]').change(function() {
-       toggleLayer();
+    $('input[type=radio][name=choose_side]').change(function () {
+
+        let side = $('input[type=radio][name=choose_side]:checked').val();
+
+        $('.my-preview .ct .right .options').html("");
+        for (let index = 0; index < layers.length; index++) {
+            const layer = layers[index];
+            if (layer.side != null && layer.type != null && (layer.side == "all" || layer.side == side) && layer.type != "outline") {
+                $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" checked name="file_layer" id="file_` + layer.filename + `"><label for="name">"` + beautifulName(layer.filename) + `"</label></div>`);
+            }
+        }
+
+        toggleLayer();
+
+        $('.input_file_layer').change(function (e) {
+            toggleLayer();
+        });
     });
 
     $('.choose_color').on('change', function () {
         toggleLayer();
     });
 
-   
+    vantuUpdate();
 }
 
 function toggleLayer() {
+
+    let side = $('input[type=radio][name=choose_side]:checked').val();
+
+
     let new_layers = [];
     let checkeds = $('input[name="file_layer"]:checked');
 
@@ -155,20 +189,90 @@ function toggleLayer() {
 
     var stackup = pcbStackupCore(new_layers, { id: 'tudc', color: new_color, useOutline: true });
 
-    let side =  $('input[type=radio][name=choose_side]:checked').val();
-    if(side == "top"){
+    if (side == "top") {
         $('.preview1').html(stackup.top.svg);
         var panZoomTiger = svgPanZoom('#tudc_top');
-    }else{
+    } else {
         $('.preview1').html(stackup.bottom.svg);
         var panZoomTiger2 = svgPanZoom('#tudc_bottom');
     }
-   
+
+}
+
+function vantuUpdate() {
+    let data = new Object();
+
+    data.width = parseFloat($('#width_upload_board').val()) * 25.4;
+    data.height = parseFloat($('#height_upload_board').val()) * 25.4;
+    let old_width = data.width;
+    let old_height = data.height;
+
+    data.quantity = parseInt($("input[name='Quantity']").val());
+
+    if ($("input[name='ProductTypeId']:checked").val() == 1 && $('#so_cot_panel').val() != '' && $('#so_dong_panel').val() != '') {
+        data.panel = true;
+        data.height = parseInt($('#so_cot_panel').val()) * data.height;
+        let xx = "";
+        if ($("input[name='vien']:checked").val() == 2) {
+            data.width = parseInt($('#so_dong_panel').val()) * data.width + 10;
+            xx = " + 2 x 5";
+        } else {
+            data.width = parseInt($('#so_dong_panel').val()) * data.width;
+        }
+
+        data.quantity = Math.ceil(data.quantity / 4);
+
+        $('.panel_size').html(`Column: (${old_width} x ${parseInt($('#so_dong_panel').val())}${xx})=${data.width}mm, Row: (${old_height} x ${parseInt($('#so_dong_panel').val())}) = ${data.height}mm, Số tấm: ${data.quantity}`);
+    }
+
+
+    console.log(data);
+
 }
 
 
 
 $(document).ready(function () {
+    $('.panel_detail').hide();
+
+    $('#ko_vien').click(e => {
+        $('#ko_vien_dau').prop("checked", true);
+        $('#vien_do_nha').prop("checked", false);
+        vantuUpdate();
+    })
+
+    $('#vien_nha').click(e => {
+        $('#vien_do_nha').prop("checked", true);
+        $('#ko_vien_dau').prop("checked", false);
+        vantuUpdate();
+    })
+
+    $("#quantity").change(function () {
+        vantuUpdate();
+    });
+
+    $("#so_dong_panel").change(function () {
+        vantuUpdate();
+    });
+
+    $("#so_cot_panel").change(function () {
+        vantuUpdate();
+    });
+
+    $('.of_orderTypeId').click(e => {
+        $('.panel_detail').hide();
+        vantuUpdate();
+    });
+
+    $('.on_orderTypeId').click(e => {
+        if (parseInt($("#quantity").val()) >= 50) {
+            $('.panel_detail').show();
+            vantuUpdate();
+        } else {
+            showNotification('Panel cho ít nhất 50 PCB', 0);
+        }
+
+    });
 
     jQuery('.show_more_text').click(function (e) {
         if (!jQuery(this).parent().children('.show_more_content').is(":visible")) {
@@ -223,6 +327,7 @@ $(document).ready(function () {
         data.test = $("input[name='TestMethodId']:checked").attr('data-value');
         data.note = $("textarea[name='Note']").val();
         data.price = Math.floor(Math.random() * 999);
+        data.file = $("#file_upload_id").val();
 
         if ($("input[name='Assembly']").val() === '1') {
             data.isAssembly = 1;
@@ -255,6 +360,14 @@ $(document).ready(function () {
         } else {
             data.isStencil = 0;
         }
+
+        if ($("input[name='ProductTypeId']:checked").val() == 1 && $('#so_cot_panel').val() != '' && $('#so_dong_panel').val() != '') {
+            data.panel = 1;
+            data.col_panel = $('#so_cot_panel').val();
+            data.row_panel = $('#so_dong_panel').val()
+            data.vien = $("input[name='vien']:checked").val() == 2 ? "Viền" : "Không";
+        }
+        
         console.log(data);
         jQuery.ajax({
             type: "POST",
@@ -488,11 +601,14 @@ $(document).ready(function () {
             return;
         }
         var data = new FormData();
-        data.append('File', file);
-        console.log(file);
+        data.append('file', file);
+        //(file);
         $.ajax({
-            type: 'GET',
-            url: 'http://localhost:3000/api/v1.0/test-svg/files2',
+            type: 'POST',
+            url: 'http://localhost:3000/api/v1.0/uploadFile',
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,
             success: function (response) {
                 //var json = $.parseJSON(response);
                 // console.log(response.top);
@@ -502,13 +618,22 @@ $(document).ready(function () {
                 // $('.preview2').html(response.bottom);
                 // var panZoomTiger = svgPanZoom('#tudc_top');
                 // var panZoomTiger2 = svgPanZoom('#tudc_bottom');
-                layers = response.layers;
-                all = response;
-                changeLayers();
+                if (response.status == 1) {
+                    layers = response.layers;
+                    all = response;
+                    //folder = response.file_folder;
+                    //file_id = response.id_file;
+                    $('#file_upload_id').val(response.id_file);
+                    changeLayers();
+                    console.log(response);
+
+                } else {
+                    showNotification(response.message, 0);
+                }
 
             },
             error: function (response) {
-                showNotification('CÃ³ lá»—i xáº£y ra trong quÃ¡ trÃ¬nh thá»±c hiá»‡n', 0);
+                showNotification('Có lỗi xảy ra!', 0);
             }
         });
 

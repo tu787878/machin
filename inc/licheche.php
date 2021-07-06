@@ -540,6 +540,24 @@ class WooCommerce_Show_Attributes
 					<div class="left">Yêu cầu đặc biệt:</div>
 					<div class="right">' . $data->note . '</div>
 					</div>';
+		if ($data->panel == 1) {
+			$options = $options . "<div class='title'>Panel: Có</div>";
+			$options = $options .  '<div class="line">
+					<div class="left">Số Cột:</div>
+					<div class="right">' . $data->col_panel . '</div>
+					</div>';
+					$options = $options .  '<div class="line">
+					<div class="left">Số hàng:</div>
+					<div class="right">' . $data->row_panel . '</div>
+					</div>';
+					$options = $options .  '<div class="line">
+					<div class="left">Viền:</div>
+					<div class="right">' . $data->vien . '</div>
+					</div>';
+		}
+		else {
+			$options = $options . "<div class='title'>Panel: Không</div>";
+		}
 
 		if ($data->isAssembly == 1) {
 			$options = $options . "<div class='title'>SMT ASSEMBLY: Có</div>";
