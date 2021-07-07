@@ -204,6 +204,12 @@ function vantuUpdate() {
 
     data.width = parseFloat($('#width_upload_board').val()) * 25.4;
     data.height = parseFloat($('#height_upload_board').val()) * 25.4;
+    if ($("input[name='LayerId']:checked").val() == "1") {
+        data.lop = "";
+    } else {
+        data.lop = "_" + $("input[name='LayerId']:checked").val() + "lop";
+    }
+
     let old_width = data.width;
     let old_height = data.height;
 
@@ -225,8 +231,20 @@ function vantuUpdate() {
         $('.panel_size').html(`Column: (${old_width} x ${parseInt($('#so_dong_panel').val())}${xx})=${data.width}mm, Row: (${old_height} x ${parseInt($('#so_dong_panel').val())}) = ${data.height}mm, Số tấm: ${data.quantity}`);
     }
 
-
-    console.log(data);
+    jQuery.ajax({
+        type: "POST",
+        url: ajax.ajaxurl,
+        data: { action: "calculate", data: data },
+        success: function (res) {
+            // res = JSON.parse(res);
+            console.log(res);
+            if (res.status === 1) {
+                console.log("ok");
+            } else {
+                console.log("not ok");
+            }
+        }
+    });
 
 }
 
@@ -234,6 +252,11 @@ function vantuUpdate() {
 
 $(document).ready(function () {
     $('.panel_detail').hide();
+
+    $(".so_lop").click(e => {
+        $(e.currentTarget).children().get(0).checked = true
+        vantuUpdate();
+    })
 
     $('#ko_vien').click(e => {
         $('#ko_vien_dau').prop("checked", true);
@@ -367,7 +390,7 @@ $(document).ready(function () {
             data.row_panel = $('#so_dong_panel').val()
             data.vien = $("input[name='vien']:checked").val() == 2 ? "Viền" : "Không";
         }
-        
+
         console.log(data);
         jQuery.ajax({
             type: "POST",

@@ -113,6 +113,51 @@ function mbm_alter_shipping ($order) {
 
 }
 
+//new_mobile_code
+add_action("wp_ajax_calculate", 'calculate');
+add_action("wp_ajax_nopriv_calculate", 'calculate');
+
+function calculate(){
+    $data = $_POST['data'];
+
+    $lop = $data['lop'];
+    $price = 0;
+
+    $khoi_luong = ((((($data['width'] * $data['height'] * $data['quantity']) -1500)*(0.666-0.5)/(500))+0.5)+0.3);
+    $ship_quoc_te = (int) get_option('ship_qt') * $khoi_luong;
+    $ship_noi_dia = $khoi_luong < 3 ? (int) get_option('ship_huyen_xa') : (int) get_option('ship_huyen_xa') + ($khoi_luong * (int) get_option('sau_3kg'));
+    $tong_ship = $ship_noi_dia + $ship_quoc_te;
+    $gia_out = 0;
+
+    if($data['width'] <= 10 && $data['height'] <= 10 && $data['quantity'] == 5){
+        $gia_out = (int) get_option('duoi_10_sl5' . $lop);
+        
+    }else if($data['width'] < 10 && $data['height'] < 10 && $data['quantity'] == 10){
+        $gia_out = (int) get_option('duoi_10_sl10' . $lop);
+
+    }else{
+
+        $pt1 = (int) ( (( $data['quantity'] - (int) get_option('so_luong_1' . $lop)[0] ) * ( (int) get_option('rong_1' . $lop)[1] - (int) get_option('rong_1' . $lop)[0] )) / ((int) get_option('so_luong_1' . $lop)[1] - (int) get_option('so_luong_1' . $lop)[0])) + (int) get_option('gia_1' . $lop)[0];
+
+        $pt2 = (int) ( (( $data['quantity'] - (int) get_option('so_luong_1' . $lop)[2] ) * ( (int) get_option('rong_1' . $lop)[3] - (int) get_option('rong_1' . $lop)[2] )) / ((int) get_option('so_luong_1' . $lop)[3] - (int) get_option('so_luong_1' . $lop)[2])) + (int) get_option('gia_1' . $lop)[2];
+
+        $gia_out =  (int) ((($data['width']*$data['height']-((int) get_option('dai_1' . $lop)[0]*(int) get_option('gia_1' . $lop)[0]))*($pt2-$pt1))/((int) get_option('gia_1' . $lop)[2]*(int) get_option('dai_1' . $lop)[2]-(int) get_option('gia_1' . $lop)[0]*(int) get_option('dai_1' . $lop)[0]))+$pt1;
+       
+    }
+    
+     $price = (int) (((( $gia_out * 1.003 * (int) get_option('ty_gia') ) + (int) get_option('phi_quan_ly') ) + $tong_ship ) * (int) get_option('ti_le_loi_nhuan' . $lop) );
+
+    $result = [
+        "price" => $price,
+        "status" => 1,
+        "gia_out" => $gia_out
+    ];
+
+    echo json_encode($result);
+    die();
+    
+}
+
 // Display as order meta
 function my_field_order_meta_handler( $item_id, $values, $cart_item_key ) {
     var_dump($values);

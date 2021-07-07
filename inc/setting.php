@@ -74,12 +74,17 @@
 <body>
 
     <?php
+    $ship_qt = get_option('ty_gia', "");
     $ship_qt = get_option('ship_qt', "");
     $dung_sai_so_luong = get_option('dung_sai_so_luong', "");
     $phi_quan_ly = get_option('phi_quan_ly', "");
     $ship_huyen_xa = get_option('ship_huyen_xa', "");
     $sau_3kg = get_option('sau_3kg', "");
 
+    if (isset($_POST['ty_gia']) && $_POST['ty_gia'] != '') {
+        $ty_gia = $_POST['ty_gia'];
+        update_option('ty_gia', $ty_gia, 'yes');
+    }
     if (isset($_POST['ship_qt']) && $_POST['ship_qt'] != '') {
         $ship_qt = $_POST['ship_qt'];
         update_option('ship_qt', $ship_qt, 'yes');
@@ -114,6 +119,10 @@
         <form action="#" method="post">
             <div class="content">
                 <h3>Cài đặt chung (nghìn đồng)</h3>
+                <label>
+                    Tỷ giá (nghìn đồng):
+                    <input type="text" name="ty_gia" value="<?php echo $ty_gia ?>" />
+                </label>
                 <label>
                     Vận chuyển quốc tế (nghìn đồng):
                     <input type="text" name="ship_qt" value="<?php echo $ship_qt ?>" />

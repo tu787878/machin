@@ -443,24 +443,24 @@ function machin()
                                                 <div class="option">
                                                     <ul class="option-choose">
                                                         <li class="d-inline-block layerId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="LayerId" value="4">
+                                                            <label class="rel item so_lop">
+                                                                <input type="radio" name="LayerId" value="1">
                                                                 1 </label>
                                                         </li>
                                                         <li class="d-inline-block layerId">
-                                                            <label class="rel item choose ">
+                                                            <label class="rel item choose so_lop">
                                                                 <i class="jp-ico subscript-ico"></i>
-                                                                <input type="radio" name="LayerId" value="5" checked="checked">
+                                                                <input type="radio" name="LayerId" value="2" checked="checked">
                                                                 2 </label>
                                                         </li>
                                                         <li class="d-inline-block layerId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="LayerId" value="6">
+                                                            <label class="rel item so_lop">
+                                                                <input type="radio" name="LayerId" value="4">
                                                                 4 </label>
                                                         </li>
                                                         <li class="d-inline-block layerId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="LayerId" value="7">
+                                                            <label class="rel item so_lop">
+                                                                <input type="radio" name="LayerId" value="6">
                                                                 6 </label>
                                                         </li>
 
