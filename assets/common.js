@@ -22,8 +22,11 @@ function beautifulName(name) {
 }
 
 function changeLayers() {
+    // $('.preview2').html(all.top);
+    // var z = svgPanZoom('#tudc_top');
     $('.choose_color').val("green");
     $('.my-preview').show();
+    // $('.preview22').show();
     $('.my-preview .ct .right .options').html("");
     for (let index = 0; index < layers.length; index++) {
         console.log();
@@ -38,19 +41,16 @@ function changeLayers() {
         if (layer.side != null && layer.type != null && (layer.side == "all" || layer.side == "top") && layer.type != "outline") {
             $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" checked name="file_layer" id="file_` + layer.filename + `"><label for="name">"` + beautifulName(layer.filename) + `"</label></div>`);
         }
+        if (layer.type == "outline") {
+            $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" name="file_layer" checked id="file_` + layer.filename + `"><label for="name">` + 'Outline' + `</label></div>`);
+        }
     }
     // layers.forEach((layer) => {
     //     console.log(layer);
 
     // });
     var DEFAULT_COLOR = {
-        // fr4: '#666',
-        // cu: '#58a5e4',
-        // cf: '#',
-        // sm: '#0F670B', //#0F670B, #1010F5, #FB0F09, #101009, #DFE90E, #FFFFFF
-        // ss: '#fff',
-        // sp: '#999',
-        // out: '#58a5e4',
+
         fr4: '#666',
         cu: '#ccc',
         cf: '#c93',
@@ -68,10 +68,16 @@ function changeLayers() {
         new_layers.push(layers[checked.value]);
     }
 
-    var stackup = pcbStackupCore(new_layers, { id: 'tudc', color: DEFAULT_COLOR, useOutline: true });
-    $('.preview1').html(stackup.top.svg);
-    var panZoomTiger = svgPanZoom('#tudc_top');
-    $('.preview22').hide();
+    // var stackup = pcbStackupCore(new_layers, { id: 'tudc', color: DEFAULT_COLOR, useOutline: true });
+    // $('.preview1').html(stackup.top.svg);
+    // var panZoomTiger = svgPanZoom('#tudc_top');
+
+    pcbStackup(new_layers, {id: 'tudc', color: DEFAULT_COLOR, outlineGapFill: 3.6, useOutline: true}).then(stackup => {
+        $('.preview1').html(stackup.top.svg);
+        var panZoomTiger = svgPanZoom('#tudc_top');
+    })
+
+    // $('.preview22').hide();
     $('.input_file_layer').change(function (e) {
         toggleLayer();
     });
@@ -85,6 +91,9 @@ function changeLayers() {
             const layer = layers[index];
             if (layer.side != null && layer.type != null && (layer.side == "all" || layer.side == side) && layer.type != "outline") {
                 $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" checked name="file_layer" id="file_` + layer.filename + `"><label for="name">"` + beautifulName(layer.filename) + `"</label></div>`);
+            }
+            if (layer.type == "outline") {
+                $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" checked class="input_file_layer" value="` + index + `" name="file_layer" id="file_` + layer.filename + `"><label for="name">` + 'Outline' + `</label></div>`);
             }
         }
 
@@ -187,15 +196,20 @@ function toggleLayer() {
             break;
     }
 
-    var stackup = pcbStackupCore(new_layers, { id: 'tudc', color: new_color, useOutline: true });
+    // var stackup = pcbStackupCore(new_layers, { id: 'tudc', color: new_color, useOutline: true });
 
-    if (side == "top") {
-        $('.preview1').html(stackup.top.svg);
-        var panZoomTiger = svgPanZoom('#tudc_top');
-    } else {
-        $('.preview1').html(stackup.bottom.svg);
-        var panZoomTiger2 = svgPanZoom('#tudc_bottom');
-    }
+    pcbStackup(new_layers, {id: 'tudc', color: new_color, outlineGapFill: 3.6, useOutline: true}).then(stackup => {
+       console.log(stackup);
+        if (side == "top") {
+            $('.preview1').html(stackup.top.svg);
+            var panZoomTiger = svgPanZoom('#tudc_top');
+        } else {
+            $('.preview1').html(stackup.bottom.svg);
+            var panZoomTiger2 = svgPanZoom('#tudc_bottom');
+        }
+    })
+
+
 
 }
 
@@ -234,7 +248,7 @@ function vantuUpdate() {
     jQuery.ajax({
         type: "POST",
         url: ajax.ajaxurl,
-        data: { action: "calculate", data: data },
+        data: { action: "calculate", data: { width: 25, height: 25, quantity: 1000, lop: "" } },
         success: function (res) {
             // res = JSON.parse(res);
             console.log(res);
