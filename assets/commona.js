@@ -21,7 +21,16 @@ function beautifulName(name) {
     return name;
 }
 
+function convertToVND(x){
+    x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+    console.log(x);
+    return x;
+}
+
+
+
 function changeLayers() {
+    let outline = false;
     // $('.preview2').html(all.top);
     // var z = svgPanZoom('#tudc_top');
     $('.choose_color').val("green");
@@ -32,11 +41,15 @@ function changeLayers() {
         console.log();
         const layer = layers[index];
         if (layer.type == "outline") {
+            outline = true;
             $('#width_upload_board').val(layer.converter.width.toFixed(2));
+            $('#width').val((layer.converter.width * 25.4).toFixed(2));
             $('#height_upload_board').val(layer.converter.height.toFixed(2));
+            $('#height').val((layer.converter.height * 25.4).toFixed(2));
             $('#units_upload_board').val(layer.converter.units);
             $('#chieu_cao_mach').html(layer.converter.height.toFixed(2));
             $('#chieu_rong_mach').html(layer.converter.width.toFixed(2));
+            vantuUpdate();
         }
         if (layer.side != null && layer.type != null && (layer.side == "all" || layer.side == "top") && layer.type != "outline") {
             $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" checked name="file_layer" id="file_` + layer.filename + `"><label for="name">"` + beautifulName(layer.filename) + `"</label></div>`);
@@ -44,6 +57,11 @@ function changeLayers() {
         if (layer.type == "outline") {
             $('.my-preview .ct .right .options').append(`<div class="option"><input type="checkbox" class="input_file_layer" value="` + index + `" name="file_layer" checked id="file_` + layer.filename + `"><label for="name">` + 'Outline' + `</label></div>`);
         }
+    }
+
+    if(!outline){
+        showNotification('Thiếu file outline, vui lòng thử lại', 0);
+        return;
     }
     // layers.forEach((layer) => {
     //     console.log(layer);
@@ -216,8 +234,12 @@ function toggleLayer() {
 function vantuUpdate() {
     let data = new Object();
 
-    data.width = parseFloat($('#width_upload_board').val()) * 25.4;
-    data.height = parseFloat($('#height_upload_board').val()) * 25.4;
+    if($('#height').val() == "" || $('#width').val() == "") return;
+
+    data.width = parseFloat($('#height').val());
+    data.height = parseFloat($('#width').val());
+
+
     if ($("input[name='LayerId']:checked").val() == "1") {
         data.lop = "";
     } else {
@@ -243,19 +265,29 @@ function vantuUpdate() {
         data.quantity = Math.ceil(data.quantity / 4);
 
         $('.panel_size').html(`Column: (${old_width} x ${parseInt($('#so_dong_panel').val())}${xx})=${data.width}mm, Row: (${old_height} x ${parseInt($('#so_dong_panel').val())}) = ${data.height}mm, Số tấm: ${data.quantity}`);
+    }else{
+        data.panel = false;
     }
+    console.log(data);
 
     jQuery.ajax({
         type: "POST",
         url: ajax.ajaxurl,
-        data: { action: "calculate", data: { width: 25, height: 25, quantity: 1000, lop: "" } },
+        data: { action: "calculate", data: data },
         success: function (res) {
-            // res = JSON.parse(res);
+            if(res != '') res = JSON.parse(res);
+            else{
+                res.status = 0;
+            }
             console.log(res);
+            
             if (res.status === 1) {
                 console.log("ok");
+                $('#total_price_text').html(convertToVND(res.price));
+
             } else {
                 console.log("not ok");
+                $('#total_price_text').html(convertToVND(0));
             }
         }
     });
@@ -265,7 +297,30 @@ function vantuUpdate() {
 
 
 $(document).ready(function () {
+
+    $('#height').keydown(e => {
+        console.log("ok con de");
+        vantuUpdate();
+    });
+
+    $('#width').keydown(e => {
+        console.log("ok con de");
+        vantuUpdate();
+    }); 
+
     $('.panel_detail').hide();
+
+    $('.aluu').click(e => {
+        $('.ko_alu').hide();
+        $('#lop_cho_alu').click();
+        $('#input_cho_alu').val("_alu");
+        vantuUpdate();
+    })
+    $('.ko_phai_alu').click(e => {
+        $('.ko_alu').show();
+        $('#input_cho_alu').val("1");
+        vantuUpdate();
+    })
 
     $(".so_lop").click(e => {
         $(e.currentTarget).children().get(0).checked = true
@@ -412,10 +467,10 @@ $(document).ready(function () {
             data: { action: "add_to_card", data: data },
             success: function (res) {
                 res = JSON.parse(res);
-
-                if (res === 1) {
+                console.log(res);
+                if (res.status === 1) {
                     parameter = order_id;
-                    window.location.href = machin.home + "/cart/?add-to-cart=41&data_id=" + parameter;
+                    window.location.href = machin.home + "/gio-hang/?add-to-cart="+ res.id +"&data_id=" + parameter;
                 } else {
                     console.log("not ok");
                 }
@@ -642,7 +697,7 @@ $(document).ready(function () {
         //(file);
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:3000/api/v1.0/uploadFile',
+            url: 'https://machinlocal.imaker.vn/api/v1.0/uploadFile',
             data: data,
             processData: false,  // tell jQuery not to process the data
             contentType: false,
@@ -663,6 +718,7 @@ $(document).ready(function () {
                     $('#file_upload_id').val(response.id_file);
                     changeLayers();
                     console.log(response);
+                    
 
                 } else {
                     showNotification(response.message, 0);

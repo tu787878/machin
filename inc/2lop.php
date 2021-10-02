@@ -254,7 +254,7 @@
                 }
                 ?>
             </table>
-            <h4>Số lượng 50 - 75</h4>
+            <h4>Số lượng 50 - 100</h4>
             <table>
                 <tr>
                     <th>Dài</th>

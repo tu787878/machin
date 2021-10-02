@@ -1,0 +1,91 @@
+.decorate {
+  background-color: white;
+}
+
+.main {
+  background-color: rgb(228, 228, 228);
+}
+
+.rowed {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+input[type="radio"] {
+  outline: none;
+}
+
+.rowed .item {
+  margin-left: 10px;
+}
+
+.value {
+  margin-left: 30px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.middle {
+  margin-left: 5px !important;
+  margin-right: 5px;
+}
+
+.input-group-text {
+  height: fit-content;
+}
+
+.hide {
+  display: none;
+}
+
+#nhanh_text {
+  display: none;
+}
+
+#chon_so_luong .card-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+#chon_so_luong .custom{
+    margin-top: 15px;
+}
+
+.title {
+  font-size: medium;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.show_more_content .hide_text {
+  display: none;
+}
+
+.show_more_content .content {
+  display: flex;
+  flex-direction: column;
+}
+.show_more_content .content .line {
+  display: flex;
+  margin-top: 5px;
+}
+
+.show_more_content .content .line .left {
+  font-weight: 300;
+  text-align: left;
+}
+
+.show_more_content .content .line .right {
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+.show_more_text {
+  color: blue;
+  cursor: pointer;
+}

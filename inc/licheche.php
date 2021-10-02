@@ -473,128 +473,122 @@ class WooCommerce_Show_Attributes
 		$data = $wpdb->get_row("SELECT * FROM $table WHERE order_id = '$data_id'");
 
 		$options = "";
-		$options =  $options . '<div class="line">
-							<div class="left">Loại sản phẩm:</div>
-							<div class="right">' . $data->type_pcb . '</div>
-							</div>';
-
-		$options = $options .  '<div class="line">
+		$options =  $options . '<div class="preview_text">';
+		$options =  $options . '<div class="line fix_view">
+		<div class="left">File:</div>
+		<a href="' . $data->file . '"><div class="right">Download File</div></a>
+		</div>';
+		$options = $options .  '<div class="line fix_view">
 					<div class="left">Kích thước:</div>
 					<div class="right">' . $data->height . ' x ' . $data->width . ' cm</div>
 					</div>';
+		$options =  $options . '<div class="line fix_view">
+					<div class="left">Số lượng:</div>
+					<div class="right">' . $data->quantity . '</div>
+					</div>';
+		$options =  $options . '</div>';
 
-		$options =  $options . '<div class="line">
-							<div class="left">Số lượng:</div>
-							<div class="right">' . $data->quantity . '</div>
-							</div>';
+		$options =  $options . '<div class="hide_text">';
 
 		$options = $options . "<div class='title'>Thông số PCB:</div>";
+
+		$options =  $options . '<div class="line">
+		<div class="left">Loại sản phẩm:</div>
+		<div class="right">' . $data->type_pcb . '</div>
+		</div>';
+
 		$options = $options . '<div class="line">
-					<div class="left">Số lớp:</div>
-					<div class="right">' . $data->layers . '</div>
-					</div>';
+<div class="left">Số lớp:</div>
+<div class="right">' . $data->layers . '</div>
+</div>';
 
 		$options = $options . '<div class="line">
-					<div class="left">Kiểu đơn hàng:</div>
-					<div class="right">' . $data->type_order . '</div>
-					</div>';
+<div class="left">Kiểu đơn hàng:</div>
+<div class="right">' . $data->type_order . '</div>
+</div>';
 
 		$options =  $options . '<div class="line">
-							<div class="left">Độ dày:</div>
-							<div class="right">' . $data->dichte . '</div>
-							</div>';
+		<div class="left">Độ dày:</div>
+		<div class="right">' . $data->dichte . '</div>
+		</div>';
 		$options =  $options . '<div class="line">
-					<div class="left">Độ dày đồng hoàn thiện:</div>
-					<div class="right">' . $data->dichte_done . '</div>
-					</div>';
-
-		$options =  $options . '<div class="line">
-					<div class="left">Khoảng cách nhỏ nhât:</div>
-					<div class="right">' . $data->distant . '</div>
-					</div>';
-
-		$options =  $options . '<div class="line">
-							<div ‚‚class="left">Kích thước lỗ khoan nhỏ nhất:</div>
-							<div class="right">' . $data->size_khoan . '</div>
-							</div>';
-		$options = $options .  '<div class="line">
-					<div class="left">Phủ trông hàn:</div>
-					<div class="right">' . $data->color . '</div>
-					</div>';
+<div class="left">Độ dày đồng hoàn thiện:</div>
+<div class="right">' . $data->dichte_done . '</div>
+</div>';
 
 		$options = $options .  '<div class="line">
-					<div class="left">Màu chữ:</div>
-					<div class="right">' . $data->text_color . '</div>
-					</div>';
+<div class="left">Phủ trông hàn:</div>
+<div class="right">' . $data->color . '</div>
+</div>';
+
 
 		$options =  $options . '<div class="line">
-							<div class="left">Bề mặt hoàn thiện:</div>
-							<div class="right">' . $data->interface . '</div>
-							</div>';
+		<div class="left">Bề mặt hoàn thiện:</div>
+		<div class="right">' . $data->interface . '</div>
+		</div>';
 		$options =  $options . '<div class="line">
-					<div class="left">Phương pháp test:</div>
-					<div class="right">' . $data->test . '</div>
-					</div>';
+<div class="left">Phương pháp test:</div>
+<div class="right">' . $data->test . '</div>
+</div>';
 
 		$options = $options .  '<div class="line">
-					<div class="left">Yêu cầu đặc biệt:</div>
-					<div class="right">' . $data->note . '</div>
-					</div>';
+<div class="left">Yêu cầu đặc biệt:</div>
+<div class="right">' . $data->note . '</div>
+</div>';
 		if ($data->panel == 1) {
 			$options = $options . "<div class='title'>Panel: Có</div>";
 			$options = $options .  '<div class="line">
-					<div class="left">Số Cột:</div>
-					<div class="right">' . $data->col_panel . '</div>
-					</div>';
-					$options = $options .  '<div class="line">
-					<div class="left">Số hàng:</div>
-					<div class="right">' . $data->row_panel . '</div>
-					</div>';
-					$options = $options .  '<div class="line">
-					<div class="left">Viền:</div>
-					<div class="right">' . $data->vien . '</div>
-					</div>';
-		}
-		else {
+<div class="left">Số Cột:</div>
+<div class="right">' . $data->col_panel . '</div>
+</div>';
+			$options = $options .  '<div class="line">
+<div class="left">Số hàng:</div>
+<div class="right">' . $data->row_panel . '</div>
+</div>';
+			$options = $options .  '<div class="line">
+<div class="left">Viền:</div>
+<div class="right">' . $data->vien . '</div>
+</div>';
+		} else {
 			$options = $options . "<div class='title'>Panel: Không</div>";
 		}
 
 		if ($data->isAssembly == 1) {
 			$options = $options . "<div class='title'>SMT ASSEMBLY: Có</div>";
 			$options = $options .  '<div class="line">
-					<div class="left">Số mặt gia công:</div>
-					<div class="right">' . $data->side . '</div>
-					</div>';
+<div class="left">Số mặt gia công:</div>
+<div class="right">' . $data->side . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Số điểm hàn SMD:</div>
-					<div class="right">' . $data->diem_han_smd . '</div>
-					</div>';
+<div class="left">Số điểm hàn SMD:</div>
+<div class="right">' . $data->diem_han_smd . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Số điểm hàn DIP:</div>
-					<div class="right">' . $data->diem_han_dip . '</div>
-					</div>';
+<div class="left">Số điểm hàn DIP:</div>
+<div class="right">' . $data->diem_han_dip . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Tổng số linh kiện dán:</div>
-					<div class="right">' . $data->linh_kien_dan . '</div>
-					</div>';
+<div class="left">Tổng số linh kiện dán:</div>
+<div class="right">' . $data->linh_kien_dan . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Tổng số link kiện cắm:</div>
-					<div class="right">' . $data->linh_kien_gan . '</div>
-					</div>';
+<div class="left">Tổng số link kiện cắm:</div>
+<div class="right">' . $data->linh_kien_gan . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Phương thức đóng gói:</div>
-					<div class="right">' . $data->dong_goi . '</div>
-					</div>';
+<div class="left">Phương thức đóng gói:</div>
+<div class="right">' . $data->dong_goi . '</div>
+</div>';
 
 			$options = $options .  '<div class="line">
-					<div class="left">Xác nhận SMT:</div>
-					<div class="right">' . $data->xac_nhan . '</div>
-					</div>';
+<div class="left">Xác nhận SMT:</div>
+<div class="right">' . $data->xac_nhan . '</div>
+</div>';
 
 			$options = $options .  '<div class="line">
-					<div class="left">Kích thước PCB:</div>
-					<div class="right">' . $data->height_2 . ' x ' . $data->width_2 . ' cm</div>
-					</div>';
+<div class="left">Kích thước PCB:</div>
+<div class="right">' . $data->height_2 . ' x ' . $data->width_2 . ' cm</div>
+</div>';
 		} else {
 			$options = $options . "<div class='title'>SMT ASSEMBLY: Không</div>";
 		}
@@ -603,36 +597,35 @@ class WooCommerce_Show_Attributes
 			$options = $options . "<div class='title'>STENCIL: Có</div>";
 
 			$options = $options .  '<div class="line">
-					<div class="left">Loại Stencil:</div>
-					<div class="right">' . $data->loai_stencil . '</div>
-					</div>';
+<div class="left">Loại Stencil:</div>
+<div class="right">' . $data->loai_stencil . '</div>
+</div>';
+
 			$options = $options .  '<div class="line">
-					<div class="left">Đánh bóng điện:</div>
-					<div class="right">' . $data->danh_bong . '</div>
-					</div>';
+<div class="left">Mặt stencil:</div>
+<div class="right">' . $data->mat_stencil . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Mặt stencil:</div>
-					<div class="right">' . $data->mat_stencil . '</div>
-					</div>';
+<div class="left">Kích thước (mm):</div>
+<div class="right">' . $data->kich_thuoc . '</div>
+</div>';
 			$options = $options .  '<div class="line">
-					<div class="left">Kích thước (mm):</div>
-					<div class="right">' . $data->kich_thuoc . '</div>
-					</div>';
+<div class="left">Số lượng:</div>
+<div class="right">' . $data->quantity_2 . '</div>
+</div>';
+
 			$options = $options .  '<div class="line">
-					<div class="left">Số lượng:</div>
-					<div class="right">' . $data->quantity_2 . '</div>
-					</div>';
-			$options = $options .  '<div class="line">
-					<div class="left">Độ dày:</div>
-					<div class="right">' . $data->do_day . '</div>
-					</div>';
-			$options = $options .  '<div class="line">
-					<div class="left">Yêu cầu đặc biệt:</div>
-					<div class="right">' . $data->note_2 . '</div>
-					</div>';
+<div class="left">Yêu cầu đặc biệt:</div>
+<div class="right">' . $data->note_2 . '</div>
+</div>';
 		} else {
 			$options = $options . "<div class='title'>STENCIL: Không</div>";
 		}
+		$options =  $options . '</div>';
+
+
+
+
 
 
 		$content = file_get_contents(plugin_dir_path(__FILE__) . "show_more.php");

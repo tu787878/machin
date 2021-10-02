@@ -6,1179 +6,683 @@ function machin()
 {
 
 ?>
-
-
-
     <!doctype html>
     <html lang="en">
 
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Hugo 0.84.0">
+        <title>Checkout example · Bootstrap v5.0</title>
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+
+        <!-- Bootstrap core CSS -->
+
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+            }
+
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
+            }
+        </style>
+
+
+        <!-- Custom styles for this template -->
     </head>
 
-    <body>
-        <div class="pluginx">
-            <div class="quote-box" style="background: url('theme/frontend/images/topbanner.jpg') no-repeat center center;">
-                <div class="container">
-                    <ul class="tab-quote clearfix">
-                        <li class="active checkClassActive" data-id="li_1"><a href="#"><i class="i-ico ico-pcb"></i>Báo giá PCB</a></li>
-                        <li class="" data-id="li_1"><a href="#"><i class="i-ico ico-stencil"></i>Báo giá linh kiện</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="cart pcba_instant_quote pcba_quote">
-                <form action="#" id="orderForm" method="post" accept-charset="utf-8">
-                    <div class="container">
-                        <div class="row col-mar-10">
-                            <div class="col-lg-8">
-                                <div class="bg-white">
-                                    <div class="text-center py-4 d-flex justify-content-center align-content-center">
-                                        <label>
-                                            <button type="button" class="cart-file btn btn-lg btn-primary" id="btnUpdateFileGerber">Tải file gerber</button>
+    <body class="bg-light">
+
+        <input type="hidden" name="total_price_input" value=0>
+        <input type="hidden" name="gia_truoc_input" value=0>
+        <input type="hidden" name="gia_smt_input" value=0>
+        <input type="hidden" name="gia_stencil_input" value=0>
+        <input type="hidden" name="gia_pcb_dhl" value=0>
+        <input type="hidden" name="gia_stencil_dhl" value=0>
+        <!-- <input type="hidden" name="gia_san_xuat_input" value=0> -->
+
+        <div class="container">
+            <main>
+
+                <div class="row g-5">
+                    <div class="col-md-5 col-lg-4 order-md-last">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-primary">Báo giá</span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                <div>
+                                    <h6 class="my-0">Giá PCB</h6>
+                                </div>
+                                <span id="tinh_truoc" class="text-muted">0 VND</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-sm smtPrice">
+                                <div>
+                                    <h6 class="my-0">SMT Assembly</h6>
+                                </div>
+                                <span id="gia_smt" class="text-muted">0 VND</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-sm stencilPrice">
+                                <div>
+                                    <h6 class="my-0">Stencil</h6>
+                                </div>
+                                <span id="gia_stencil" class="text-muted">0 VND</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                <div style="margin-bottom: 10px !important;">
+                                    <h6 style="margin-bottom: 10px !important;" class="my-0">Thời gian sản xuất</h6>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="san_xuat" checked type="radio" value="binhthuong" id="binhthuong">
+                                        <label class="form-check-label" for="binhthuong">
+                                            15-20 ngày
                                         </label>
-                                        <input type="file" style="display: none;" id="inputFileGerber">
-                                        <input type="hidden" hidden="hidden" id="fileGerberUrl" name="FileZipUrl">
-                                        <input type="hidden" hidden="hidden" id="fileTextName" name="FileName">
-                                        <input type="hidden" hidden="hidden" name="GerBerFileId">
-
-                                        <!-- <p class="font12 color9 mt-3">Only accept zip or rar,Max 10 M</p> -->
-                                        <!-- <p class="font12 color9 mt-3">
-        <a class="cl-blue" target="_blank" href="">Instructions for ordering</a>
-    </p> -->
-                                        <!-- <p class="font12 color9 mt-3"><a class="cl-blue" href="">Log in </a>to view your upload history</p> -->
-                                        <div class="input-file">
-                                            <input type="file" name="file" id="inputfile" required="">
-                                            <label for="file" class="smooth">Tải file Pick and place</label>
-                                        </div>
                                     </div>
-                                    <div id="hackergrousrlpprsc-loader">Đang tải</div>
-                                    <div class="my-preview">
-
-                                        <div class="ct">
-                                            <div class="left">
-                                                <div class="preview11">
-                                                    <div class="preview1">
-
-                                                    </div>
-                                                </div>
-                                                <div class="preview22">
-                                                    <div class="preview2">
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="right">
-                                                <select class="choose_color" name="choose_color" id="">
-                                                    <option selected value="green">Xanh lá cây</option>
-                                                    <option value="blue">Xanh dương</option>
-                                                    <option value="black">Đen</option>
-                                                    <option value="red">Đỏ</option>
-                                                    <option value="white">Trắng</option>
-                                                    <option value="yellow">Vàng</option>
-                                                </select>
-
-                                                <!-- <div class="choose_side">
-                                                    <input type="radio" value="top" checked name="choose_side" id="side_top">
-                                                    <label for="side_top">Top</label>
-                                                    <input type="radio" value="bottom" name="choose_side" id="side_bottom">
-                                                    <label for="side_bottom">Bottom</label>
-                                                </div> -->
-                                                <div class="side">
-                                                    <p>
-                                                        <input type="radio" value="top" id="test1" name="choose_side" checked>
-                                                        <label for="test1">Top</label>
-                                                    </p>
-                                                    <p>
-                                                        <input type="radio" value="bottom" id="test2" name="choose_side">
-                                                        <label for="test2">Bottom</label>
-                                                    </p>
-                                                </div>
-
-
-                                                <div class="options">
-                                                    <div class="option"></div>
-                                                </div>
-                                            </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="san_xuat" type="radio" value="dhl" id="dhl">
+                                        <label class="form-check-label" for="dhl">
+                                            7-10 ngày
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="san_xuat" type="radio" value="nhanh" id="nhanh">
+                                        <label class="form-check-label" for="nhanh">
+                                            Nhanh VN
+                                        </label>
+                                        <div id="nhanh_text"> <small>Liên hệ Zalo để được tư vấn : </small><br>
+                                            <small>SĐT <?php echo get_option('phonex', '') ?></small>
                                         </div>
 
                                     </div>
-                                    <input type="hidden" name="" value="" id="file_upload_id">
-                                    <input type="hidden" name="" value="" id="width_upload_board">
-                                    <input type="hidden" name="" value="" id="height_upload_board">
-                                    <input type="hidden" name="" value="" id="units_upload_board">
-                                    <div id="loadDataFileGerBer"></div>
-
-                                    <!-- <div class="genber_tutorial">
-                                        <p>Hướng dẫn di chuyển/phóng to</p>
-                                        <p>Di chuyển - Bấm chuột trái + Di chuyển chuột</p>
-                                        <p>Phóng to - Con lăn chuột</p>
-                                    </div> -->
 
 
-                                    <div class="product-option">
-                                        <h3 onclick="test()" class="pcba_instant_quote_title mb-3 bold">Loại sản phẩm</h3>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-2">
-                                                <span>Loại sản phẩm :</span> <!-- Product Type -->
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block productTypeId">
-                                                            <label class="rel item choose ">
-                                                                <i class="jp-ico subscript-ico"></i>
-                                                                <input type="radio" name="ProductTypeId" value="1" checked="checked" data-product-type="1. FR-4">
-                                                                1. FR-4 </label>
-                                                        </li>
+                                </div>
+                                <!-- <span id="gia_san_xuat" class="text-muted">0 VND</span> -->
+                            </li>
 
-                                                        <li class="d-inline-block productTypeId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ProductTypeId" value="2" data-product-type="2. Aluminum Board">
-                                                                2. Aluminum Board </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3 d-flex align-items-center">
-                                            <div class="col-sm-2">
-                                                <span>Kích thước:</span> <!-- Dimensions -->
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <div class="row col-mar-0 d-flex align-items-center justify-content-center">
-                                                    <div class="col-sm-4">
-                                                        <div class="row col-mar-0">
-                                                            <div class="col-sm-6">
-                                                                <div class="title">
-                                                                    <div class="option-con mt-2">
-                                                                        <input type="number" placeholder="Height" name="Height" id='height' min="1" value="0"><b>X</b>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="title">
-                                                                    <div class="option-con mt-2">
-                                                                        <input type="number" placeholder="Width" name="Width" id="width" min="1" value="0"><b>mm</b>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <p class="cl-b16a00 text-center t-3">*Kích thước của pcb</p>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <!-- <input value="inch'↔mm" type="button" style="" id="dvConvertSize"> -->
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="xy-sizepanelpic">
-                                                            <img src="http://qttechvn.com/assets/front/images/demo03.png" alt="Size Example" class="otherban_pic" style="display: inline;">
-                                                            <img src="http://qttechvn.com/assets/front/images/demo04.png" alt="Size Example" class="lvjiban undis" style="display: none;">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-2">
-                                                <span>Số lượng:</span>
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <div class="option-con">
-                                                    <div class="option-number-hover d-inline-block">
-                                                        <input type="number" class="form-control option-number rounding" id="quantity" name="Quantity" type="number" value="5" placeholder=" ">
-                                                        <div class="boardnumber">
-                                                            <ul>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="5" checked>5
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="10">10
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="15">15
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="20">20
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="25">25
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="30">30
-                                                                    </label>
-                                                                </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Tông cộng</span>
+                                <strong id="tong_cong">0 VND</strong>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <button id="them_vao_gio_hang" type="button" class="btn btn-outline-primary">Thanh Toán</button>
+                            </li>
+                        </ul>
 
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="50">
-                                                                        50
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="75">
-                                                                        75
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="100">
-                                                                        100
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="125">
-                                                                        125
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="150">
-                                                                        150
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="200">
-                                                                        200
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="250">
-                                                                        250
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="300">
-                                                                        300
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="350">
-                                                                        350
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="400">
-                                                                        400
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="450">
-                                                                        450
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="500">
-                                                                        500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="600">
-                                                                        600
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="700">
-                                                                        700
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="800">
-                                                                        800
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="900">
-                                                                        900
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="1000">
-                                                                        1000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="1500">
-                                                                        1500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="2000">
-                                                                        2000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="2500">
-                                                                        2500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="3000">
-                                                                        3000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="3500">
-                                                                        3500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="4000">
-                                                                        4000
-                                                                    </label>
-                                                                </li>
-
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="4500">
-                                                                        4500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="5000">
-                                                                        5000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="5500">
-                                                                        5500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="6000">
-                                                                        6000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="6500">
-                                                                        6500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="7000">
-                                                                        7000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="7500">
-                                                                        7500
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="8000">
-                                                                        8000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="9000">
-                                                                        9000
-                                                                    </label>
-                                                                </li>
-                                                                <li>
-                                                                    <label>
-                                                                        <input type="radio" name="countNumer" value="10000">
-                                                                        10000
-                                                                    </label>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <span class="cl-b16a00 ml5" id="unit">*pcs</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <!-- <form class="card p-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Promo code">
+                                <button type="submit" class="btn btn-secondary">Redeem</button>
+                            </div>
+                        </form> -->
+                    </div>
+                    <div class="col-md-7 col-lg-8">
+                        <h4 class="mb-3">Upload File</h4>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Tải lên file mạch in</label>
+                            <input class="form-control" accept=".zip,.rar" type="file" id="fileMachIn">
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Loại sản phẩm</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="type_product" class="btn-check obverser" checked value="fr4_type" id="fr4_type">
+                                    <label class="btn btn-outline-success" for="fr4_type">1. FR-4</label>
+                                    <input type="radio" name="type_product" value="alu_type" class="btn-check obverser" id="alu_type">
+                                    <label class="btn btn-outline-success" for="alu_type">2. Aluminum Board</label>
+                                </div>
+                            </div>
+                            <div class="col-12 rowed">
+                                <div class="key col-2">
+                                    <p>Kích thước:</p>
+                                </div>
+                                <div class="value">
+                                    <div class="input-group mb-3">
+                                        <input type="number" step="0.1" name="width" class="form-control obverser" placeholder="Chiều rộng" aria-label="Chiều rộng">
+                                        <span class="input-group-text">cm</span>
+                                        <div class="middle">x</div>
+                                        <input type="number" step="0.1" name="height" class="form-control obverser" placeholder="Chiều dài" aria-label="Chiều dài">
+                                        <span class="input-group-text">cm</span>
                                     </div>
                                 </div>
-                                <div class="bg-white">
-                                    <div class="product-option">
-                                        <h3 class="pcba_instant_quote_title mb-3 bold">Thông số PCB</h3>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Số lớp </span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block layerId">
-                                                            <label class="rel item so_lop">
-                                                                <input type="radio" name="LayerId" value="1">
-                                                                1 </label>
-                                                        </li>
-                                                        <li class="d-inline-block layerId">
-                                                            <label class="rel item choose so_lop">
-                                                                <i class="jp-ico subscript-ico"></i>
-                                                                <input type="radio" name="LayerId" value="2" checked="checked">
-                                                                2 </label>
-                                                        </li>
-                                                        <li class="d-inline-block layerId">
-                                                            <label class="rel item so_lop">
-                                                                <input type="radio" name="LayerId" value="4">
-                                                                4 </label>
-                                                        </li>
-                                                        <li class="d-inline-block layerId">
-                                                            <label class="rel item so_lop">
-                                                                <input type="radio" name="LayerId" value="6">
-                                                                6 </label>
-                                                        </li>
 
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Kiểu đơn hàng:</span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block orderTypeId">
-                                                            <label class="rel item choose of_orderTypeId">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="OrderTypeId" class="" value="0" checked="checked" data-text="Đơn chiếc">
-                                                                Đơn chiếc </label>
-                                                        </li>
-                                                        <li class="d-inline-block orderTypeId">
-                                                            <label class="rel item on_orderTypeId">
-                                                                <input type="radio" name="OrderTypeId" class="" value="1" data-text="Panel">
-                                                                Panel </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                            </div>
 
-                                        <div class="panel_detail">
-                                            <div class="row mb-3 d-flex align-items-center">
-                                                <div class="col-sm-2">
-                                                    <span>Panel:</span> <!-- Dimensions -->
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <div class="row col-mar-0 d-flex align-items-center justify-content-center">
-                                                        <div class="col-sm-4">
-                                                            <div class="row col-mar-0">
-                                                                <div class="col-sm-6">
-                                                                    <div class="title">
-                                                                        <div class="option-con mt-2">
-                                                                            <input type="number" placeholder="Cột" name="so_cot_panel" id='so_cot_panel' min="1"><b class="machhihi" id="chieu_cao_mach"></b>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="title">
-                                                                        <div class="option-con mt-2">
-                                                                            <input type="number" placeholder="Hàng" name="so_dong_panel" id="so_dong_panel" min="1"><b class="machhihi" id="chieu_rong_mach"></b>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <p class="cl-b16a00 text-center t-3">*Số cột x dòng của panel</p>
-                                                        </div>
+                            <div class="col-12 rowed">
+                                <div class="key col-2">
+                                    <p>Số lượng:</p>
+                                </div>
+                                <div class="value">
+                                    <button id="choose_soluong" type="button" class="btn btn-outline-success">5</button>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <span>Viền</span>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="option">
-                                                        <ul class="option-choose">
-                                                            <li class="d-inline-block vien">
-                                                                <label class="rel item choose" id="ko_vien">
-                                                                    <i class="jp-ico subscript-ico"></i><input type="radio" name="vien" id="ko_vien_dau" value="0" checked="checked" data-text="Không">
-                                                                    Không </label>
-                                                            </li>
-                                                            <li class="d-inline-block vien">
-                                                                <label class="rel item"  id="vien_nha">
-                                                                    <input type="radio" name="vien" class="vien" id="vien_do_nha" value="2" data-text="2 bên">
-                                                                    2 bên </label>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <div style="display: flex;flex-direction:column" class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <span>Panel size: </span>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="panel_size">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Độ dày: </span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="21" data-value="0.4">
-                                                                0.4 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="22" data-value="0.6">
-                                                                0.6 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="23" data-value="0.8">
-                                                                0.8 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="24" data-value="1.0">
-                                                                1.0 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="25" data-value="1.2">
-                                                                1.2 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item choose ">
-                                                                <i class="jp-ico subscript-ico"></i>
-                                                                <input type="radio" name="ThicknessPcbId" value="26" checked="checked" data-value="1.6">
-                                                                1.6 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="27" data-value="2.0">
-                                                                2.0 </label>
-                                                        </li>
-                                                        <li class="d-inline-block thicknessPcbId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="ThicknessPcbId" class="" value="28" data-value="2.4">
-                                                                2.4 </label>
-                                                        </li>
-                                                        <li class="d-inline-block">
-                                                            <img src="theme/frontend/images/pic_thickness.png" alt="">
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Độ dày đồng hoàn thiện:</span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block finishedCopperId">
-                                                            <label class="rel item choose">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="FinishedCopperId" class="" value="29" checked="checked" data-value="1oz">
-                                                                1oz </label>
-                                                        </li>
-                                                        <li class="d-inline-block finishedCopperId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="FinishedCopperId" class="" value="30" data-value="2oz">
-                                                                2oz </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Khoảng cách nhỏ nhất:</span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block minSpacingId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinSpacingId" class="" value="31" data-value="4/4mil">
-                                                                4/4mil </label>
-                                                        </li>
-                                                        <li class="d-inline-block minSpacingId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinSpacingId" class="" value="32" data-value="5/5mil">
-                                                                5/5mil </label>
-                                                        </li>
-                                                        <li class="d-inline-block minSpacingId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinSpacingId" class="" value="33" data-value="6/6mil">
-                                                                6/6mil </label>
-                                                        </li>
-                                                        <li class="d-inline-block minSpacingId">
-                                                            <label class="rel item choose">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="MinSpacingId" class="" value="34" checked="checked" data-value="7/8mil">
-                                                                8/8mil </label>
-                                                        </li>
-                                                        <li class="d-inline-block">
-                                                            <img src="theme/frontend/images/pic_spacing.png" alt="">
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Kích thước lỗ khoan nhỏ nhất: </span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block minHoleSizeId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinHoleSizeId" class="" value="35" data-product-type="0.2mm">
-                                                                0.2mm </label>
-                                                        </li>
-                                                        <li class="d-inline-block minHoleSizeId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinHoleSizeId" class="" value="36" data-product-type="0.25mm">
-                                                                0.25mm </label>
-                                                        </li>
-                                                        <li class="d-inline-block minHoleSizeId">
-                                                            <label class="rel item choose">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="MinHoleSizeId" class="" value="37" checked="checked" data-product-type="0.3mm">
-                                                                0.3mm </label>
-                                                        </li>
-                                                        <li class="d-inline-block minHoleSizeId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinHoleSizeId" class="" value="38" data-product-type="0.35mm">
-                                                                0.35mm </label>
-                                                        </li>
-                                                        <li class="d-inline-block minHoleSizeId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="MinHoleSizeId" class="" value="39" data-product-type="0.4mm">
-                                                                0.4mm </label>
-                                                        </li>
-                                                        <li class="d-inline-block">
-                                                            <img src="theme/frontend/images/pic_hole.png" alt="">
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Phủ trống hàn:</span> <!-- Solder Mask -->
-                                                <div class="hover_question position-relative d-inline-block ml-2">
-                                                    <i class="fa fa-question-circle" aria-hidden="true">
-                                                        <div class="absQuestionNotice color0">
-                                                            <p>Màu xanh lá cây và màu trắng là miễn phí và mặc định. Phụ phí sẽ được tính cho các màu khác.</p>
-                                                        </div>
-                                                    </i>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="40" data-value="Không">
-                                                                Không </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item choose">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="SolderMaskId" class="" value="41" checked="checked" data-value="Xanh lá">
-                                                                Xanh lá </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="42" data-value="Đen">
-                                                                Đen </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="43" data-value="Trắng">
-                                                                Trắng </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="44" data-value="Vàng">
-                                                                Vàng </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="45" data-value="Đỏ">
-                                                                Đỏ </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="46" data-value="Xanh Dương">
-                                                                Xanh dương </label>
-                                                        </li>
-                                                        <li class="d-inline-block solderMaskId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SolderMaskId" class="" value="47" data-value="Đen mờ">
-                                                                Đen mờ </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Màu chữ:</span> <!-- Silkscreen Color -->
-                                                <div class="hover_question position-relative d-inline-block ml-2">
-                                                    <i class="fa fa-question-circle" aria-hidden="true">
-                                                        <div class="absQuestionNotice color0">
-                                                            <p>Trắng và Đen miễn phí. Các màu khác sẽ được tính thêm phí , Màu chữ và màu sơn phỉ trống hàn không thể cùng màu.</p>
-                                                        </div>
-                                                    </i>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block silkscreenColorId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SilkscreenColorId" class="" value="49" data-value="Không">
-                                                                <i class="choose-color không"></i>
-                                                                Không </label>
-                                                        </li>
-                                                        <li class="d-inline-block silkscreenColorId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SilkscreenColorId" class="" value="50" data-value="Đen">
-                                                                <i class="choose-color Đen"></i>
-                                                                Đen </label>
-                                                        </li>
-                                                        <li class="d-inline-block silkscreenColorId">
-                                                            <label class="rel item choose">
-                                                                <input type="radio" name="SilkscreenColorId" class="" value="51" checked="checked" data-value="Trắng">
-                                                                <i class="choose-color trắng"></i>
-                                                                Trắng </label>
-                                                        </li>
-                                                        <li class="d-inline-block silkscreenColorId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SilkscreenColorId" class="" value="52" data-value="Vàng">
-                                                                <i class="choose-color vàng"></i>
-                                                                Vàng </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Bề mặt hoàn thiện:</span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block surfaceFinishId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SurfaceFinishId" class="" value="58" data-value="None">
-                                                                None </label>
-                                                        </li>
-                                                        <li class="d-inline-block surfaceFinishId">
-                                                            <label class="rel item choose">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="SurfaceFinishId" class="" value="59" checked="checked" data-value="HASL Lead Free">
-                                                                HASL Lead Free </label>
-                                                        </li>
-                                                        <li class="d-inline-block surfaceFinishId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SurfaceFinishId" class="" value="60" data-value="Immersion Gold">
-                                                                Immersion Gold </label>
-                                                        </li>
-                                                        <li class="d-inline-block surfaceFinishId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SurfaceFinishId" class="" value="61" data-value="Immersion Tin">
-                                                                Immersion Tin </label>
-                                                        </li>
-                                                        <li class="d-inline-block surfaceFinishId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="SurfaceFinishId" class="" value="62" data-value="OSP">
-                                                                OSP </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Phương pháp test:</span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="option">
-                                                    <ul class="option-choose">
-                                                        <li class="d-inline-block testMethodId">
-                                                            <label class="rel item choose">
-                                                                <i class="jp-ico subscript-ico"></i><input type="radio" name="TestMethodId" class="" value="74" checked="checked" data-value="Kiểm tra bằng mắt thường">
-                                                                Kiểm tra bằng mắt thường </label>
-                                                        </li>
-                                                        <li class="d-inline-block testMethodId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="TestMethodId" class="" value="113" data-value="Full test">
-                                                                Full test </label>
-                                                        </li>
-                                                        <li class="d-inline-block testMethodId">
-                                                            <label class="rel item">
-                                                                <input type="radio" name="TestMethodId" class="" value="114" data-value="JIG Test">
-                                                                JIG test </label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3">
-                                                <span>Yêu cầu đặc biệt:</span>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control " rows="3" maxlength="200" name="Note" placeholder=""></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="pbc-advanced">
-                                            <div class="switch-box d-flex align-items-center justify-content-between">
-                                                <div class="switch-left">
-                                                    <i class="switch-box-icon smt-icon"></i>
-                                                    <h6>SMT Assembly</h6>
-                                                </div>
-                                                <div class="switch-right d-flex">
-                                                    <span class="ng-scope">
-                                                        <span class="mx-2">Đặt gia công SMT</span>
-                                                    </span>
-                                                    <div class="switch-btn ng-scope" data-btn="1">
-                                                        <i></i>
-                                                        <input type="hidden" name="Assembly" value="0">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="switch-upload-box ng-scope ajax_switch_smt">
 
-                                            </div>
-                                        </div>
-                                        <div class="pbc-advanced">
-                                            <div class="switch-box d-flex align-items-center justify-content-between">
-                                                <div class="switch-left">
-                                                    <i class="switch-box-icon"></i>
-                                                    <h6>Stencil</h6>
-                                                </div>
-                                                <div class="switch-right d-flex">
-                                                    <span class="ng-scope">
-                                                        <span class="mx-2">Đặt hàng cùng PCB</span>
-                                                    </span>
-                                                    <div class="switch-btn ng-scope" data-btn="2">
-                                                        <i></i>
-                                                        <input type="hidden" name="Stencil" value="0">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="switch-upload-box ng-scope ajax_switch_stencil">
+                                    <!-- <select name="so_luong" id="so_luong" class="form-select form-select-sm obverser" aria-label=".form-select-sm example">
+                                        <option selected value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="75">75</option>
+                                        <option value="100">100</option>
+                                        <option value="125">125</option>
+                                        <option value="150">150</option>
+                                        <option value="175">175</option>
+                                        <option value="200">200</option>
+                                        <option value="225">225</option>
+                                        <option value="250">250</option>
+                                        <option value="275">275</option>
+                                        <option value="300">300</option>
+                                        <option value="350">350</option>
+                                        <option value="400">400</option>
+                                        <option value="450">450</option>
+                                        <option value="500">500</option>
+                                    </select> -->
 
-                                            </div>
-                                        </div>
+                                </div>
+                                <div id="chon_so_luong" class="card col-8 hide">
+                                    <div class="card-body">
+                                        <?php
+                                        $so_luong_setup = get_option('so_luong_setup');
+
+                                        $myArray = explode(',', $so_luong_setup);
+                                        $cols = 4;
+                                        $count = 0;
+
+                                        for ($i = 0; $i < count($myArray); $i++) {
+                                            if ($i == 0) {
+                                        ?>
+                                                <div class="custom col-3">
+                                                    <input type="radio" name="so_luong" checked class="btn-check obverser" value="<?php echo $myArray[$i] ?>" id="so_luong_<?php echo $i ?>">
+                                                    <label class="btn btn-outline-success" for="so_luong_<?php echo $i ?>"><?php echo $myArray[$i] ?></label>
+                                                </div>
+
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <div class="custom col-3">
+                                                    <input type="radio" name="so_luong" class="btn-check obverser" value="<?php echo $myArray[$i] ?>" id="so_luong_<?php echo $i ?>">
+                                                    <label class="btn btn-outline-success" for="so_luong_<?php echo $i ?>"><?php echo $myArray[$i] ?></label>
+                                                </div>
+
+                                        <?php
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <div class="bg-white mb-3">
-                                    <div class="product-option">
-                                        <div class="d-flex align-items-center justify-content-between border-bot pb-3">
-                                            <strong class="font16">Tổng:</strong>
-                                            <div class="bold font20"><span class="font20" id="total_price_text">0</span></div>
-                                            <input type="hidden" name="" id="total_price_int" value="">
+
+                            <hr class="my-4">
+
+                            <h4 class="mb-3">Thông số PCB</h4>
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Số lớp:</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="so_lop" class="btn-check obverser" value="" id="1-lop">
+                                    <label class="btn btn-outline-success" for="1-lop">1</label>
+                                    <input checked value="_2lop" type="radio" name="so_lop" class="btn-check obverser" id="2-lop">
+                                    <label class="btn btn-outline-success" for="2-lop">2</label>
+                                    <input value="_4lop" type="radio" name="so_lop" class="btn-check obverser" id="4-lop">
+                                    <label class="btn btn-outline-success" for="4-lop">4</label>
+                                    <input value="_6lop" type="radio" name="so_lop" class="btn-check obverser" id="6-lop">
+                                    <label class="btn btn-outline-success" for="6-lop">6</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Kiểu đơn hàng:</p>
+                                </div>
+                                <div class="value col-6">
+                                    <input checked type="radio" name="order_type" class="btn-check obverser" value="don_chiec" id="don_chiec">
+                                    <label class="btn btn-outline-success" for="don_chiec">Đơn chiếc</label>
+                                    <input value="panel" disabled type="radio" name="order_type" class="btn-check obverser" id="panel">
+                                    <label class="btn btn-outline-success" for="panel">Panel</label>
+                                </div>
+                            </div>
+                            <div class="isPanel hide">
+                                <hr class="my-4">
+                                <div class="col-sm-12 rowed">
+                                    <div class="key col-2">
+                                        <p>Panel:</p>
+                                    </div>
+                                    <div class="value">
+                                        <div class="input-group mb-3">
+                                            <input id="so_cot_panel" type="number" name="so_cot_panel" class="form-control obverser" placeholder="Cột">
+                                            <span class="input-group-text">Cột</span>
+                                            <div class="middle">x</div>
+                                            <input type="number" id="so_dong_panel" name="so_dong_panel" class="form-control obverser" placeholder="Dòng">
+                                            <span class="input-group-text">Dòng</span>
                                         </div>
-                                        <dl class="price-delivery-list">
-                                            <dt>
-                                                <span id="xxx" class="ww w3 text-center normal bg-f90 float-left">Thời gian sản xuất</span>
-                                                <!-- <span class="ww w2 text-center normal float-left bg-8a8a8a">Số lượng</span> -->
-                                                <!-- <span class="ww w3 text-center normal float-left bg-8a8a8a">Giá/dm<sup>2</sup></span> -->
-                                            </dt>
-                                            <dd class="pointer rel clearfix py-3">
-
-                                                <span class="ww w1 tudc text-center normal bg-f90 float-left">
-                                                    <input type="radio" name="LeadTime" value="3" checked> Bình thường </span>
-                                                <span class="ww w1 tudc text-center normal bg-f90 float-left">
-                                                    <input type="radio" name="LeadTime" value="2"> DHL </span>
-                                                <span class="ww w1 tudc text-center normal bg-f90 float-left">
-                                                    <input type="radio" name="LeadTime" value="1"> Nhanh VN </span>
-
-                                            </dd>
-                                            <p>Thời gian : <span class="timesx v1" id="timesx3">20 ngày</span><span class="timesx" id="timesx2">7-10 ngày</span><span class="timesx" id="timesx1">2-3 ngày</span>
-                                            </p>
-                                            <div class="courier-company mt-3">
-                                                <h3 class="pcba_quote-title mt-3">Phí ship: </h3>
-                                                <dt>
-                                                    <span class="ww w1 text-center normal bg-f90 float-left">Loại</span>
-                                                    <span class="ww w2 text-center normal float-left bg-8a8a8a">Số lượng</span>
-                                                    <span class="ww w3 text-center normal float-left bg-8a8a8a">Giá tiền</span>
-                                                </dt>
-                                                <dd class="pointer rel clearfix my-1">
-                                                    <span class="ww w1 text-center normal bg-f90 float-left">PCB</span>
-                                                    <span class="ww w2 text-center normal float-left bg-8a8a8a" id="quantity">0</span>
-                                                    <span class="ww w3 text-center normal float-left bg-8a8a8a" id="price">0</span>
-                                                </dd>
-                                                <dd class="pointer rel clearfix my-1" id="shipPrice_1" style="display:none">
-                                                    <span class="ww w1 text-center normal bg-f90 float-left">SMT</span>
-                                                    <span class="ww w2 text-center normal float-left bg-8a8a8a" id="quantity1">1</span>
-                                                    <span class="ww w3 text-center normal float-left bg-8a8a8a" id="price1">0</span>
-                                                </dd>
-                                                <dd class="pointer rel clearfix my-1" id="shipPrice_2" style="display:none">
-                                                    <span class="ww w1 text-center normal bg-f90 float-left">Stencil</span>
-                                                    <span class="ww w2 text-center normal float-left bg-8a8a8a" id="quantity2">1</span>
-                                                    <span class="ww w3 text-center normal float-left bg-8a8a8a" id="price2">0</span>
-                                                </dd>
-                                                <div class="Country mb-3 clearfix d-flex">
-                                                    <select class="form-control select-default b-bradius4" name="TransportId" id="transportId" data-id="">
-                                                        <option value="0">-- Phương thức vận chuyển --</option>
-                                                        <option value="1">Vận chuyển nội thành Hà Nội</option>
-                                                        <option value="2">Vận chuyển liên tỉnh</option>
-                                                    </select> <select class="form-control select2 select-default b-bradius4" name="TransporterId" id="transporterId">
-                                                        <option value="0">--Nhà vận chuyển--</option>
-                                                        <option value="1">Viettelpost</option>
-                                                        <option value="2">GHTK</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="pcb-time">
-                                                <div class="clearfix">
-                                                    <!-- <div class="d-flex align-items-center justify-content-between mb-3">
-                        <span>PCB Assembly Cost:</span> 
-                        <span id="pcbAssemblyCos">0 VNĐ</span>
-                    </div> -->
-                                                    <!-- <div class="d-flex align-items-center justify-content-between mb-3">
-                        <span>Phí vận chuyển:</span> 
-                        <span id="transporterPrice">0 VNĐ</span>
-                    </div> -->
-                                                    <!-- <div class="d-flex align-items-center justify-content-between mb-3">
-                        <span class="bold">Tổng:</span> 
-                        <span class="font20 yellow subTotal">0 VNĐ</span>
-                    </div> -->
-                                                    <div class="remarks my-3 clearfix">
-                                                        <!-- <div class="remark-email mb-3">
-                            <span class="color-red">*</span> Your email:
-                            <input class="input-default" name="" id="" type="text">
-                        </div> -->
-
-                                                        <button class=" btn btn-yellow font18 bold" id="them_vao_gio_hang" type=button><i class="jp-ico bigcart-ico"></i>Thêm vào giỏ hàng</button>
-                                                    </div>
-                                                    <!-- <p class="color-999 font12">Tips:</p>
-                    <p class="color-999 font12">      1. Please notice that the final amount is determined by the engineering review, and 5%-10% orders may need extra charge.</p>
-                    <p class="color-999 font12">    2. We will follow your files to make the PCB boards&nbsp;and we are not responsible for finding all the issues in the Gerber file.&nbsp;</p>
-                    <p class="color-999 font12">  3. The Manufacturing No. will be printed on your boards by default!</p> -->
-                                                </div>
-                                            </div>
-                                        </dl>
                                     </div>
                                 </div>
-                                <input type="hidden" hidden="hidden" id="urlGetPriceTransporters" value="http://qttechvn.com/order/getPriceTransporters">
-
-                                <input type="text" hidden="hidden" id="price" value="250000">
-                                <input type="text" hidden="hidden" id="feesPrice" value="0">
-
-                                <input type="text" hidden="hidden" id="price_1" value="180000">
-                                <input type="text" hidden="hidden" id="feesPrice_1" value="0">
-
-                                <input type="text" hidden="hidden" id="price_2" value="25000">
-                                <input type="text" hidden="hidden" id="feesPrice_2" value="180000">
-
-                                <input type="text" hidden="hidden" id="price_3" value="25000">
-                                <input type="text" hidden="hidden" id="feesPrice_3" value="180000">
-
-                                <input type="text" hidden="hidden" id="price_4" value="25000">
-                                <input type="text" hidden="hidden" id="feesPrice_4" value="50000">
-
-                                <input type="text" hidden="hidden" id="price_5" value="20000">
-                                <input type="text" hidden="hidden" id="feesPrice_5" value="180000">
-
-                                <input type="text" hidden="hidden" id="feesDhl" value="500000">
-                                <input type="text" hidden="hidden" id="phoneNumberPcb" value="0978.302.994">
-                                <input type="text" hidden="hidden" id="acreage" value="300000">
-                                <input type="text" hidden="hidden" id="priceSmdSolderPoint" value="60">
-                                <input type="text" hidden="hidden" id="priceDipSolderPoint" value="150">
-                                <input type="text" hidden="hidden" id="feesPriceSmt_1" value="50000">
-                                <input type="text" hidden="hidden" id="feesPriceSmt_2" value="500000">
-                                <input type="text" hidden="hidden" id="feesPriceSmt_3" value="1000000">
-                                <input type="text" hidden="hidden" id="price_dk" value="500000">
-                                <input type="text" hidden="hidden" id="price_smt1" value="">
-                                <input type="text" hidden="hidden" id="feesPriceSmt_4" value="1500000">
-                                <input type="text" hidden="hidden" id="feesPriceSmt_5" value="">
-
-                                <input type="text" hidden="hidden" id="priceSmdStencil" value="">
-                                <input type="text" hidden="hidden" id="changeTransportId" value="0">
-                                <input type="text" hidden="hidden" id="changeLeadTime" value="3">
-                                <input type="text" hidden="hidden" id="totalPricePCB" value="0">
-                                <input type="text" hidden="hidden" id="totalPricePCBAssembly" value="0">
-                                <input type="text" hidden="hidden" id="changeDataTotalSize" value="0">
-                                <input type="text" hidden="hidden" id="priceShip" value="0"> <input type="hidden" hidden="hidden" id="getDetailProductType" value="http://qttechvn.com/producttype/detail">
-                                <input type="hidden" hidden="hidden" id="ajaxSwitchSmt" value="http://qttechvn.com/site/ajaxSwitchSmt">
-                                <input type="hidden" hidden="hidden" id="checkPage" value="1">
-                                <input type="hidden" hidden="hidden" id="infoProduct" value="">
+                                <div class="col-sm-12 rowed">
+                                    <div class="key col-2">
+                                        <p>Viền:</p>
+                                    </div>
+                                    <div class="value col-6">
+                                        <input checked type="radio" name="vien_panel" class="btn-check obverser" value="0" id="khongvien">
+                                        <label class="btn btn-outline-success" for="khongvien">Không</label>
+                                        <input value="2" type="radio" name="vien_panel" class="btn-check obverser" id="haiben">
+                                        <label class="btn btn-outline-success" for="haiben">Hai bên</label>
+                                    </div>
+                                </div>
+                                <small id="panel_detail">hihihi</small>
+                                <hr class="my-4">
                             </div>
-                </form>
-            </div>
+
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Độ dày:</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="do_day" class="btn-check" value="0.4" id="day1">
+                                    <label class="btn btn-outline-success" for="day1">0.4</label>
+                                    <input value="0.6" type="radio" name="do_day" class="btn-check" id="day2">
+                                    <label class="btn btn-outline-success" for="day2">0.6</label>
+                                    <input checked type="radio" name="do_day" class="btn-check" value="0.8" id="day3">
+                                    <label class="btn btn-outline-success" for="day3">0.8</label>
+                                    <input value="1.0" type="radio" name="do_day" class="btn-check" id="day4">
+                                    <label class="btn btn-outline-success" for="day4">1.0</label>
+                                    <input type="radio" name="do_day" class="btn-check" value="1.2" id="day5">
+                                    <label class="btn btn-outline-success" for="day5">1.2</label>
+                                    <input checked value="1.6" type="radio" name="do_day" class="btn-check" id="day6">
+                                    <label class="btn btn-outline-success" for="day6">1.6</label>
+                                    <input type="radio" name="do_day" class="btn-check" value="2.0" id="day7">
+                                    <label class="btn btn-outline-success" for="day7">2.0</label>
+                                    <input value="2.4" type="radio" name="do_day" class="btn-check" id="day8">
+                                    <label class="btn btn-outline-success" for="day8">2.4</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Độ dày đồng hoàn thiện:</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="do_day_dong" class="btn-check" checked value="1oz" id="1oz">
+                                    <label class="btn btn-outline-success" for="1oz">1oz</label>
+                                    <input type="radio" name="do_day_dong" value="2oz" class="btn-check" id="2oz">
+                                    <label class="btn btn-outline-success" for="2oz">2oz</label>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Khoảng cách nhỏ nhất:</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="khoang_cach_nho_nhat" class="btn-check" checked value="4/4mil" id="4/4mil">
+                                    <label class="btn btn-outline-success" for="4/4mil">4/4mil</label>
+                                    <input type="radio" name="khoang_cach_nho_nhat" value="5/5mil" class="btn-check" id="5/5mil">
+                                    <label class="btn btn-outline-success" for="5/5mil">5/5mil</label>
+                                    <input type="radio" name="khoang_cach_nho_nhat" value="8/8mil" class="btn-check" id="8/8mil">
+                                    <label class="btn btn-outline-success" for="8/8mil">8/8mil</label>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Kích thước lỗ khoan nhỏ nhất:</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="kich_thuoc_lo_khoan" class="btn-check" value="0.2" id="0.2mm">
+                                    <label class="btn btn-outline-success" for="0.2mm">0.2mm</label>
+                                    <input type="radio" name="kich_thuoc_lo_khoan" value="0.25" class="btn-check" id="0.25mm">
+                                    <label class="btn btn-outline-success" for="0.25mm">0.25mm</label>
+                                    <input type="radio" name="kich_thuoc_lo_khoan" class="btn-check" value="0.3" id="0.3mm">
+                                    <label class="btn btn-outline-success" for="0.3mm">0.3mm</label>
+                                   
+                                    <input type="radio" name="kich_thuoc_lo_khoan" value="0.4" class="btn-check" id="0.4mm">
+                                    <label class="btn btn-outline-success" for="0.4mm">0.4mm</label>
+                                </div>
+                            </div> -->
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Phủ trống hàn:</p>
+                                </div>
+                                <div class="value">
+                                    <input checked type="radio" name="phu_trong_han" value="xanhla" class="btn-check" id="xanhla">
+                                    <label class="btn btn-outline-success" for="xanhla">Xanh lá</label>
+                                    <input type="radio" name="phu_trong_han" value="trang" class="btn-check" id="trang">
+                                    <label class="btn btn-outline-success" for="trang">Trắng</label>
+                                    <input type="radio" name="phu_trong_han" value="vang" class="btn-check" id="vang">
+                                    <label class="btn btn-outline-success" for="vang">Vàng</label>
+                                    <input type="radio" name="phu_trong_han" class="btn-check" value="do" id="do">
+                                    <label class="btn btn-outline-success" for="do">Đỏ</label>
+                                    <input type="radio" name="phu_trong_han" value="xanhduong" class="btn-check" id="xanhduong">
+                                    <label class="btn btn-outline-success" for="xanhduong">Xanh dương</label>
+                                    <input type="radio" name="phu_trong_han" value="0denmo" class="btn-check" id="denmo">
+                                    <label class="btn btn-outline-success" for="denmo">Đen mờ</label>
+                                    <input type="radio" name="phu_trong_han" class="btn-check" value="tim" id="tim">
+                                    <label class="btn btn-outline-success" for="tim">Tím</label>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-12 rowed" style="margin-top: 30px;">
+                                <div class="key col-2">
+                                    <p>Màu chữ: </p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="mau_chu" class="btn-check" checked value="none" id="chukhong">
+                                    <label class="btn btn-outline-success" for="chukhong">Không</label>
+                                    <input type="radio" name="mau_chu" value="den" class="btn-check" id="chuden">
+                                    <label class="btn btn-outline-success" for="chuden">Đen</label>
+                                    <input type="radio" name="mau_chu" class="btn-check" value="trang" id="chutrang">
+                                    <label class="btn btn-outline-success" for="chutrang">Trắng</label>
+                                    <input type="radio" name="mau_chu" value="vang" class="btn-check" id="chuvang">
+                                    <label class="btn btn-outline-success" for="chuvang">Vàng</label>
+                                </div>
+                            </div> -->
+
+                            <div class="col-sm-12 rowed">
+                                <div class="key col-2">
+                                    <p>Bề mặt hoàn thiện:</p>
+                                </div>
+                                <div class="value">
+                                    <input type="radio" name="be_mat_hoan_thien" class="btn-check" checked value="none" id="bematnone">
+                                    <label class="btn btn-outline-success" for="bematnone">None</label>
+                                    <input type="radio" name="be_mat_hoan_thien" value="hasl" class="btn-check" id="hasl">
+                                    <label class="btn btn-outline-success" for="hasl">HASL Lead Free</label>
+                                    <input type="radio" name="be_mat_hoan_thien" class="btn-check" value="Immersion" id="Immersion">
+                                    <label class="btn btn-outline-success" for="Immersion">Immersion Gold</label>
+                                    <input type="radio" name="be_mat_hoan_thien" value="Immersion2" class="btn-check" id="Immersion2">
+                                    <label class="btn btn-outline-success" for="Immersion2">Immersion Tin</label>
+                                    <input type="radio" name="be_mat_hoan_thien" value="OSP" class="btn-check" id="OSP">
+                                    <label class="btn btn-outline-success" for="OSP">OSP</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 rowed"">
+                                <div class=" key col-2">
+                                <p>Phương pháp test:</p>
+                            </div>
+                            <div class="value">
+                                <input type="radio" name="phuong_phap_test" class="btn-check" checked value="mathuong" id="mathuong">
+                                <label class="btn btn-outline-success" for="mathuong">Kiểm tra bằng mắt thường</label>
+                                <input type="radio" name="phuong_phap_test" value="fulltest" class="btn-check" id="full">
+                                <label class="btn btn-outline-success" for="full">Full test</label>
+                                <input type="radio" name="phuong_phap_test" class="btn-check" value="jig" id="jig">
+                                <label class="btn btn-outline-success" for="jig">JIG test</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 rowed" ">
+                                <div class=" key col-2">
+                            <p>Yêu cầu đặc biệt:</p>
+                        </div>
+                        <div class="value">
+                            <div class="form-floating">
+                                <textarea class="form-control" name="note" id="floatingTextarea2" style="height: 100px"></textarea>
+                                <label for="floatingTextarea2"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+
+                    <div class="col-sm-12 rowed" ">
+                                <div class=" key col-2">
+                        <h4 class="mb-3">SMT ASSEMBLY</h4>
+                    </div>
+                    <div class="value">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="gia_cong_smt" type="checkbox" id="smtSwitch">
+                            <label class="form-check-label" for="smtSwitch">Đặt gia công SMT</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide" id="isSmtSwitch">
+                    <div class="col-12 rowed">
+                        <div class=" col-2 key">
+                            <p class="mb-3">*Số lượng mạch:</p>
+                        </div>
+                        <div class="value">
+                            <input type="number" value="1" name="so_luong_mach" class="form-control obverser_smt" aria-label="Text input with checkbox">
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="col-2 key ">
+                            <p class="mb-3">*Số mặt gia công：</p>
+                        </div>
+                        <div class="value">
+                            <select class="form-select" name="so_mat" aria-label="Default select example">
+                                <option value="1">Một mặt</option>
+                                <option value="2">Hai mặt</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="key col-2">
+                            <p>*Số điểm hàn SMD/ 1 mạch：</p>
+                        </div>
+                        <div class="value">
+                            <div class="input-group mb-3">
+                                <input value="1" type="number" name="so_diem_hang_smd" class="form-control obverser_smt" placeholder="Số điểm hàn SMD" aria-label="Chiều rộng">
+                                <span class="input-group-text">PSC</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="key col-2">
+                            <p>*Số điển hàn DIP/ 1 mạch：</p>
+                        </div>
+                        <div class="value">
+                            <div class="input-group mb-3">
+                                <input value="1" type="number" name="so_diem_hang_dip" class="form-control obverser_smt" placeholder="Số điển hàn DIP" aria-label="Chiều rộng">
+                                <span class="input-group-text">PSC</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="key col-2">
+                            <p>*Tổng số linh kiện dán</p>
+                        </div>
+                        <div class="value">
+                            <div class="input-group mb-3">
+                                <input value="1" type="number" name="linh_kien_dan" class="form-control">
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="key col-2">
+                            <p>*Tổng số linh kiện cắm:</p>
+                        </div>
+                        <div class="value">
+                            <div class="input-group mb-3">
+                                <input value="1" type="number" name="linh_kien_cam" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="col-2 key ">
+                            <p class="mb-3">*Phương thức đóng gói</p>
+                        </div>
+                        <div class="value">
+                            <select class="form-select" name="phuong_thuc_dong_goi" aria-label="Default select example">
+                                <option value="1">Quấn xốp chung</option>
+                                <option value="2">Quấn xốp riêng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="col-2 key ">
+                            <p class="mb-3">*Xác nhận SMT：</p>
+                        </div>
+                        <div class="value">
+                            <select class="form-select" name="xac_nhan_smt" aria-label="Default select example">
+                                <option value="1">Chụp ảnh để xác nhận trước khi sản xuất tất cả</option>
+                                <option value="2">Sản xuất theo tài liệu không cần xác nhận trước</option>
+                                <option value="3">Khách hàng sang check kiểm tra xác nhận trực tiếp</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="key col-2">
+                            <p>*Kích thước PCB:</p>
+                        </div>
+                        <div class="value ">
+                            <div class="input-group mb-3">
+                                <input type="number" name="width_2" class="form-control col-1">
+                                <span class="input-group-text">cm</span>
+                                <input type="number" name="height_2" class="form-control">
+                                <span class="input-group-text">cm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr class="my-4">
+
+                <div class="col-sm-12 rowed">
+                    <div class="key col-2">
+                        <h4 class="mb-3">STENCIL</h4>
+                    </div>
+                    <div class="value">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="dat_hang_stencil" type="checkbox" id="stencilSwitch">
+                            <label class="form-check-label" for="stencilSwitch">Đặt hàng cùng PCB</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="hide" id="isStencilSwitch">
+                    <div class="col-sm-12 rowed">
+                        <div class="key col-2">
+                            <p>Loại Stencil:</p>
+                        </div>
+                        <div class="value">
+                            <input type="radio" name="loai_stencil" class="btn-check" checked value="co_khung" id="co_khung">
+                            <label class="btn btn-outline-success" for="co_khung">Có khung</label>
+                            <input type="radio" name="loai_stencil" value="khong_khung" class="btn-check" id="khong_khung">
+                            <label class="btn btn-outline-success" for="khong_khung">Không có khung</label>
+                        </div>
+                    </div>
+                    <!-- `<div class="col-sm-12 rowed">
+                        <div class="key col-2">
+                            <p>Đánh bóng điện:</p>
+                        </div>
+                        <div class="value">
+                            <input type="radio" name="danh_bong_dien" class="btn-check" checked value="yes" id="yes">
+                            <label class="btn btn-outline-success" for="yes">Có</label>
+                            <input type="radio" name="danh_bong_dien" value="no" class="btn-check" id="no">
+                            <label class="btn btn-outline-success" for="no">Không</label>
+                        </div>
+                    </div>` -->
+                    <div class="col-sm-12 rowed">
+                        <div class="key col-2">
+                            <p>Mặt stencil:</p>
+                        </div>
+                        <div class="value">
+                            <input type="radio" name="mat_stencil" class="btn-check obverser_stencil" checked value="top" id="top">
+                            <label class="btn btn-outline-success" for="top">Top</label>
+                            <input type="radio" name="mat_stencil" value="bottom" class="btn-check obverser_stencil" id="bottom">
+                            <label class="btn btn-outline-success" for="bottom">Bottom</label>
+                            <input type="radio" name="mat_stencil" value="top_bottom" class="btn-check obverser_stencil" id="top_bottom">
+                            <label class="btn btn-outline-success" for="top_bottom">Top và Bottom (Chung một Stencil)</label>
+                            <input type="radio" name="mat_stencil" value="top_bottom2" class="btn-check obverser_stencil" id="top_bottom2">
+                            <label class="btn btn-outline-success" for="top_bottom2">Top và Bottom( 2 khung Stencil)</label>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed" style="margin-top: 20px;">
+                        <div class="col-2 key ">
+                            <p class="mb-3">Kích thước (mm):</p>
+                        </div>
+                        <div class="value">
+
+
+                            <select class="form-select obverser_stencil" name="kich_thuoc_stencil" aria-label="Default select example">
+                                <?php
+                                $prices = get_option('stencil_price', []);
+                                $names = get_option('stencil_name', []);
+
+                                for ($i = 0; $i < count($names); $i++) {
+                                    if (strcmp($names[$i], "") != 0) {
+                                ?>
+
+                                        <option data-price="<?php echo $prices[$i] ?>" value="<?php echo $names[$i] ?>"><?php echo $names[$i] ?></option>
+
+                                <?php
+                                    }
+                                }
+
+                                ?>
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 rowed">
+                        <div class="key col-2">
+                            <p>Số lượng:</p>
+                        </div>
+                        <div class="value">
+                            <div class="input-group mb-3">
+                                <input value="1" type="number" name="so_luong_stencil" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-sm-12 rowed">
+                        <div class="key col-2">
+                            <p>Độ dày:</p>
+                        </div>
+                        <div class="value">
+                            <input disabled type="radio" name="do_day_stencil" class="btn-check" value="0.10" id="do_day_10">
+                            <label class="btn btn-outline-success" for="do_day_10">0.10mm</label>
+                            <input checked type="radio" name="do_day_stencil" value="0.12" class="btn-check" id="do_day_12">
+                            <label class="btn btn-outline-success" for="do_day_12">0.12mm</label>
+                            <input disabled type="radio" name="do_day_stencil" value="0.15" class="btn-check" id="do_day_15">
+                            <label class="btn btn-outline-success" for="do_day_15">0.15mm</label>
+                            <input disabled type="radio" name="do_day_stencil" value="0.20" class="btn-check" id="do_day_20">
+                            <label class="btn btn-outline-success" for="do_day_20">0.2mm</label>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-12 rowed" ">
+                                <div class=" key col-2">
+                        <p>Yêu cầu đặc biệt:</p>
+                    </div>
+                    <div class="value">
+                        <div class="form-floating">
+                            <textarea class="form-control" name="note_2" id="floatingTextarea22" style="height: 100px"></textarea>
+                            <label for="floatingTextarea22"></label>
+                        </div>
+                    </div>
+
+
+                </div>
+
         </div>
-        </div>
+        </main>
 
-
-
-
-
-        <input type="text" hidden="hidden" id="getListWardUrl" value="http://qttechvn.com/api/config/getListWard">
-        <input type="text" hidden="hidden" id="uploadFileNormalUrl" value="http://qttechvn.com/file/uploadNormal">
-        <input type="hidden" hidden="hidden" id="urlReadNotificationOrder" value="http://qttechvn.com/api/order/changeStatusReadOrder">
-        <input type="hidden" hidden="hidden" id="HOST_API_GERBER_UPLOAD" value="http://gerber.hoanmuada.com/api/upload">
-        <input type="hidden" hidden="hidden" id="HOST_API_GERBER_FILE" value="http://gerber.hoanmuada.com/api/file">
-        <script src="http://qttechvn.com/assets/front/js/jquery-2.2.1.min.js"></script>
-        <script src="http://qttechvn.com/assets/front/js/bootstrap.min.js"></script>
-        <script src="http://qttechvn.com/assets/front/js/slick.min.js"></script>
-        <script src="http://qttechvn.com/assets/front/js/wow.js"></script>
-        <script src="http://qttechvn.com/assets/front/js/menu.js"></script>
-        <script src="http://qttechvn.com/assets/front/js/script.js"></script>
-        <script src="http://qttechvn.com/assets/vendor/plugins/pnotify/pnotify.custom.min.js"></script>
-        <script src="https://unpkg.com/gerber-to-svg@^4.0.0/dist/gerber-to-svg.min.js"></script>
-        <!--<script src=""></script>-->
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2017–2021 Company Name</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
         </div>
 
     </body>
 
     </html>
-    <style>
-        #customerSaveForm .position-relative .fa {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50px;
-            display: flex;
-            height: 37px;
-            background: #ccc;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #484848;
-            border-bottom-left-radius: 4px;
-            border-top-left-radius: 4px;
-        }
-
-        #customerSaveForm .position-relative span {
-            position: absolute;
-            top: 9px;
-            right: 15px;
-            font-size: 18px;
-            color: #ff0000;
-        }
-
-        #customerSaveForm .position-relative input {
-            padding: 0 0 0 60px;
-        }
-
-        .form-capcha #captcha {
-            background: #ccc url('assets/front/images/1.jpg');
-            padding: 0 20px;
-            display: flex;
-            height: 37px;
-            align-items: center;
-        }
-
-        .form-capcha input {
-            border: 1px solid #ccc;
-            margin-left: 20px;
-            border-radius: 4px;
-            height: 37px;
-        }
-
-        .form-capcha {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal .modal-body .submit-create-account {
-            width: 200px !important;
-        }
-
-        .contact-footer ul li a {
-            color: #ff9900;
-        }
-    </style>
-    <style>
-        .download-button {
-            display: inline-block !important;
-            background-color: #008000;
-            border-color: #008000;
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            height: 34px;
-            line-height: 1;
-            margin-top: 5px;
-            border-radius: .3rem;
-            color: #fff;
-        }
-
-        .input-file #inputfile {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            max-width: 100%;
-            bottom: 0;
-            opacity: 0;
-        }
-
-        .input-file {
-            display: none;
-            cursor: pointer;
-            position: relative;
-            background-color: #008000;
-            border-color: #008000;
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            line-height: 1;
-            margin-top: 5px;
-            border-radius: .3rem;
-            color: #fff;
-            margin-left: 15px;
-
-        }
-    </style>
 
 
 <?php
