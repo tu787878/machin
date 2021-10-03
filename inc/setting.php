@@ -120,14 +120,14 @@
     <div id="London" class="tabcontent">
         <form action="#" method="post">
             <div class="content">
-                <h3>Cài đặt chung (nghìn đồng)</h3>
+                <h3>Cài đặt chung (đồng)</h3>
                 
                 <label>
-                    Tỷ giá (nghìn đồng):
+                    Tỷ giá (đồng):
                     <input type="text" name="ty_gia" value="<?php echo $ty_gia ?>" />
                 </label>
                 <label>
-                    Vận chuyển quốc tế (nghìn đồng):
+                    Vận chuyển quốc tế (đồng):
                     <input type="text" name="ship_qt" value="<?php echo $ship_qt ?>" />
                 </label>
                 <label>
@@ -135,15 +135,15 @@
                     <input type="text" name="dung_sai_so_luong" value="<?php echo $dung_sai_so_luong ?>" />
                 </label>
                 <label>
-                    Phí quản lý cho sale (nghìn đồng):
+                    Phí quản lý cho sale (đồng):
                     <input type="text" name="phi_quan_ly" value="<?php echo $phi_quan_ly ?>" />
                 </label>
                 <label>
-                    Ship huyện xã (nghìn đồng):
+                    Ship huyện xã (đồng):
                     <input type="text" name="ship_huyen_xa" value="<?php echo $ship_huyen_xa ?>" />
                 </label>
                 <label>
-                    Sau 3kg (nghìn đồng):
+                    Sau 3kg (đồng):
                     <input type="text" name="sau_3kg" value="<?php echo $sau_3kg ?>" />
                 </label>
                 <label>

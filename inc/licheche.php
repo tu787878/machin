@@ -497,6 +497,11 @@ class WooCommerce_Show_Attributes
 		<div class="right">' . $data->type_pcb . '</div>
 		</div>';
 
+		$options =  $options . '<div class="line">
+		<div class="left">Thời gian sản xuất:</div>
+		<div class="right">' . $data->thoi_gian_san_xuat . '</div>
+		</div>';
+
 		$options = $options . '<div class="line">
 <div class="left">Số lớp:</div>
 <div class="right">' . $data->layers . '</div>

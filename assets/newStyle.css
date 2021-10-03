@@ -21,6 +21,7 @@ input[type="radio"] {
 
 .value {
   margin-left: 30px;
+  margin-bottom: 10px;
 }
 
 .title {
@@ -49,11 +50,10 @@ input[type="radio"] {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
 }
 
-#chon_so_luong .custom{
-    margin-top: 15px;
+#chon_so_luong .custom {
+  margin-top: 15px;
 }
 
 .title {
@@ -88,4 +88,8 @@ input[type="radio"] {
 .show_more_text {
   color: blue;
   cursor: pointer;
+}
+
+.wc-item-meta {
+  display: none;
 }

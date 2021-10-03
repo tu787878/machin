@@ -51,6 +51,10 @@ function machin()
         <input type="hidden" name="gia_stencil_input" value=0>
         <input type="hidden" name="gia_pcb_dhl" value=0>
         <input type="hidden" name="gia_stencil_dhl" value=0>
+        <input type="hidden" name="isPanel" value=0>
+        <input type="hidden" name="widthPanel" value=0>
+        <input type="hidden" name="heightPanel" value=0>
+        <input type="hidden" name="soTamPanel" value=0>
         <!-- <input type="hidden" name="gia_san_xuat_input" value=0> -->
 
         <div class="container">
@@ -58,25 +62,25 @@ function machin()
 
                 <div class="row g-5">
                     <div class="col-md-5 col-lg-4 order-md-last">
-                        <h4 class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-primary">Báo giá</span>
-                        </h4>
+                        <h3 class="d-flex justify-content-between align-items-center mb-3">
+                            <span style="font-weight:bold;margin-left:20px" class="text-primary">Báo giá</span>
+                        </h3>
                         <ul class="list-group mb-3">
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
-                                    <h6 class="my-0">Giá PCB</h6>
+                                    <h6 style="font-weight: bold;opacity: 1 !important;" class="my-0">Giá PCB</h6>
                                 </div>
                                 <span id="tinh_truoc" class="text-muted">0 VND</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between lh-sm smtPrice">
                                 <div>
-                                    <h6 class="my-0">SMT Assembly</h6>
+                                    <h6 style="font-weight: bold;opacity: 1 !important;" class="my-0">SMT Assembly</h6>
                                 </div>
                                 <span id="gia_smt" class="text-muted">0 VND</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between lh-sm stencilPrice">
                                 <div>
-                                    <h6 class="my-0">Stencil</h6>
+                                    <h6 style="font-weight: bold;opacity: 1 !important;" class="my-0">Stencil</h6>
                                 </div>
                                 <span id="gia_stencil" class="text-muted">0 VND</span>
                             </li>
@@ -113,12 +117,17 @@ function machin()
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between">
-                                <span>Tông cộng</span>
+                                <span style="margin-bottom: 10px;opacity: 1 !important;">Tổng cộng</span>
                                 <strong id="tong_cong">0 VND</strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <button id="them_vao_gio_hang" type="button" class="btn btn-outline-primary">Thanh Toán</button>
+
                             </li>
+                            <li class="d-flex justify-content-between">
+                                <small id="show_error" style="color: red;font-size: 21px;background-color: yellow;"></small>
+                            </li>
+                            <small id="show_error" style="color: red;"></small>
                         </ul>
 
                         <!-- <form class="card p-2">
@@ -129,7 +138,7 @@ function machin()
                         </form> -->
                     </div>
                     <div class="col-md-7 col-lg-8">
-                        <h4 class="mb-3">Upload File</h4>
+                        <h3 style="font-weight:bold;" class="mb-3">GIA CÔNG PCB</h3>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Tải lên file mạch in</label>
                             <input class="form-control" accept=".zip,.rar" type="file" id="fileMachIn">
@@ -266,10 +275,10 @@ function machin()
                                     </div>
                                     <div class="value">
                                         <div class="input-group mb-3">
-                                            <input id="so_cot_panel" type="number" name="so_cot_panel" class="form-control obverser" placeholder="Cột">
+                                            <input id="so_cot_panel" type="number" name="so_cot_panel" class="form-control" placeholder="Cột">
                                             <span class="input-group-text">Cột</span>
                                             <div class="middle">x</div>
-                                            <input type="number" id="so_dong_panel" name="so_dong_panel" class="form-control obverser" placeholder="Dòng">
+                                            <input type="number" id="so_dong_panel" name="so_dong_panel" class="form-control" placeholder="Dòng">
                                             <span class="input-group-text">Dòng</span>
                                         </div>
                                     </div>
@@ -279,13 +288,43 @@ function machin()
                                         <p>Viền:</p>
                                     </div>
                                     <div class="value col-6">
-                                        <input checked type="radio" name="vien_panel" class="btn-check obverser" value="0" id="khongvien">
+                                        <input checked type="radio" name="vien_panel" class="btn-check" value="0" id="khongvien">
                                         <label class="btn btn-outline-success" for="khongvien">Không</label>
-                                        <input value="2" type="radio" name="vien_panel" class="btn-check obverser" id="haiben">
+                                        <input value="2" type="radio" name="vien_panel" class="btn-check" id="haiben">
                                         <label class="btn btn-outline-success" for="haiben">Hai bên</label>
                                     </div>
                                 </div>
-                                <small id="panel_detail">hihihi</small>
+                                <div id="panel_detail" class="card hide">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Thông số panel</h5>
+                                        <div class="card-text" id="chieu_rong_panel_detail">Chiều rộng：10 x 2 = 20.00 cm</div>
+                                        <div class="card-text" id="chieu_dai_panel_detail">Chiều dài： 8 x 3 = 24.00 cm </div>
+                                        <div class="card-text" id="so_tam_panel_detail">Số lượng panel sau ghép: 75 / 6 = 13 Panel</div>
+                                    </div>
+                                </div>
+                                <div id="option_panel" class="col-sm-12 rowed hide">
+                                    <div class="key col-12">
+                                        <div>Lựa chọn: <div style="color:red;margin-bottom:10px" class="red">Vì số panel bạn ghép hiện đang bị lẻ ảnh hưởng tới việc sản xuất của nhà máy nên vui lòng chọn lại theo yêu cầu bên dưới. Xin cảm ơn!</div></div>
+                                    </div>
+                                    <div class="value col-10">
+                                        <div class="input-group mb-3">
+                                            <input checked type="radio" name="optionPanel" class="btn-check obverser_panel" value="0" id="khongghepnua">
+                                            <label class="btn btn-outline-success" for="khongghepnua">Không ghép nữa</label>
+
+                                        </div>
+                                        <div class="input-group mb-3 cl_truoc">
+                                            <input type="radio" name="optionPanel" class="btn-check obverser_panel" value="0" id="panelTruoc">
+                                            <label class="btn btn-outline-success" for="panelTruoc"></label>
+                                        </div>
+                                        <div class="input-group mb-3 cl_sau">
+                                            <input type="radio" name="optionPanel" class="btn-check obverser_panel" value="0" id="panelSau">
+                                            <label class="btn btn-outline-success" for="panelSau"></label>
+                                        </div>
+
+
+                                    </div>
+                                </div>
                                 <hr class="my-4">
                             </div>
 
@@ -308,8 +347,7 @@ function machin()
                                     <label class="btn btn-outline-success" for="day6">1.6</label>
                                     <input type="radio" name="do_day" class="btn-check" value="2.0" id="day7">
                                     <label class="btn btn-outline-success" for="day7">2.0</label>
-                                    <input value="2.4" type="radio" name="do_day" class="btn-check" id="day8">
-                                    <label class="btn btn-outline-success" for="day8">2.4</label>
+                                    
                                 </div>
                             </div>
                             <div class="col-sm-12 rowed">
@@ -425,7 +463,7 @@ function machin()
                         </div>
                         <div class="value">
                             <div class="form-floating">
-                                <textarea class="form-control" name="note" id="floatingTextarea2" style="height: 100px"></textarea>
+                                <textarea class="form-control" name="note" id="floatingTextarea2" style="height: 100px;width:400px"></textarea>
                                 <label for="floatingTextarea2"></label>
                             </div>
                         </div>
@@ -434,7 +472,7 @@ function machin()
 
                     <div class="col-sm-12 rowed" ">
                                 <div class=" key col-2">
-                        <h4 class="mb-3">SMT ASSEMBLY</h4>
+                        <h4 style="font-weight: bold;" class="mb-3">SMT ASSEMBLY</h4>
                     </div>
                     <div class="value">
                         <div class="form-check form-switch">
@@ -471,7 +509,7 @@ function machin()
                         <div class="value">
                             <div class="input-group mb-3">
                                 <input value="1" type="number" name="so_diem_hang_smd" class="form-control obverser_smt" placeholder="Số điểm hàn SMD" aria-label="Chiều rộng">
-                                <span class="input-group-text">PSC</span>
+                                <span class="input-group-text">Điểm</span>
                             </div>
                         </div>
                     </div>
@@ -482,7 +520,7 @@ function machin()
                         <div class="value">
                             <div class="input-group mb-3">
                                 <input value="1" type="number" name="so_diem_hang_dip" class="form-control obverser_smt" placeholder="Số điển hàn DIP" aria-label="Chiều rộng">
-                                <span class="input-group-text">PSC</span>
+                                <span class="input-group-text">Điểm</span>
                             </div>
                         </div>
                     </div>
@@ -551,7 +589,7 @@ function machin()
 
                 <div class="col-sm-12 rowed">
                     <div class="key col-2">
-                        <h4 class="mb-3">STENCIL</h4>
+                        <h4 style="font-weight: bold;" class="mb-3">STENCIL</h4>
                     </div>
                     <div class="value">
                         <div class="form-check form-switch">
@@ -659,7 +697,7 @@ function machin()
                     </div>
                     <div class="value">
                         <div class="form-floating">
-                            <textarea class="form-control" name="note_2" id="floatingTextarea22" style="height: 100px"></textarea>
+                            <textarea class="form-control" name="note_2" id="floatingTextarea22" style="height: 100px;width:400px"></textarea>
                             <label for="floatingTextarea22"></label>
                         </div>
                     </div>
@@ -670,14 +708,7 @@ function machin()
         </div>
         </main>
 
-        <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">&copy; 2017–2021 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Privacy</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Support</a></li>
-            </ul>
-        </footer>
+       
         </div>
 
     </body>

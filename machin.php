@@ -2,8 +2,8 @@
 
 /**
  * Plugin Name: Mach In Plugin
- * Description: bao gia tu dong mach in By Tudc
- * Version: 1.0
+ * Description: Báo giá PCB tự động by Tú đc
+ * Version: 2.2.2
  * License: GPLv2 or later
  */
 
@@ -14,14 +14,21 @@ require plugin_dir_path(__FILE__) . '/inc/licheche.php';
 
 function themeslug_enqueue_style()
 {
+    $plugin_data = get_plugin_data(__FILE__);
+    $plugin_version = $plugin_data['Version'];
+
     wp_enqueue_style('font', plugin_dir_url(__FILE__) . 'assets/font-awesome.css', false);
     wp_enqueue_style('bootstrapStyle', plugin_dir_url(__FILE__) . 'assets/bootstrap.min.css');
-    wp_enqueue_style('newStyle', plugin_dir_url(__FILE__) . 'assets/newStyle.css');
+    wp_enqueue_style('newStyle', plugin_dir_url(__FILE__) . 'assets/newStyle.css', array(), $plugin_version);
     wp_enqueue_style('formValidation', plugin_dir_url(__FILE__) . 'assets/form-validation.css');
 }
 
 function themeslug_enqueue_script()
 {
+
+    $plugin_data = get_plugin_data(__FILE__);
+    $plugin_version = $plugin_data['Version'];
+
     wp_enqueue_script('jqueryx', plugin_dir_url(__FILE__) . 'assets/jquery.js', false);
     wp_enqueue_script("bootstrapJs", plugin_dir_url(__FILE__) . 'assets/bootstrap.min.js', false);
     wp_enqueue_script("formValidationJs", plugin_dir_url(__FILE__) . 'assets/form-validation.js', false);
@@ -31,7 +38,7 @@ function themeslug_enqueue_script()
 
     $myArray = explode(',', $so_luong_setup);
 
-    wp_register_script("newScript", plugin_dir_url(__FILE__) . 'assets/newScript.js', false);
+    wp_register_script("newScript", plugin_dir_url(__FILE__) . 'assets/newScript2.js', array(), $plugin_version);
     wp_localize_script('newScript', 'ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
     wp_localize_script('newScript', 'machin', array('home' => get_home_url()));
     wp_localize_script('newScript', 'extra', array('phone' => get_option("phonex", ""), 'so_luong_setup' => $myArray));
@@ -90,7 +97,7 @@ function add_to_card()
     global $wpdb;
 
     $table = "wp_machin_order_data";
-    $status = $wpdb->query("INSERT INTO $table (order_id, price, type_pcb, width, height, quantity, layers, type_order, dichte, dichte_done, distant, size_khoan, color, text_color, interface, test, note, file) VALUES ('" . $data['order_id'] . "', " . $data['price'] . ", '" . $data['type_pcb'] . "', '" . $data['width'] . "', '" . $data['height'] . "', '" . $data['quantity'] . "', '" . $data['layers'] . "', '" . $data['type_order'] . "', '" . $data['dichte'] . "', '" . $data['dichte_done'] . "', '" . $data['distant'] . "', '" . $data['size_khoan'] . "', '" . $data['color'] . "', '" . $data['text_color'] . "', '" . $data['interface'] . "', '" . $data['test'] . "', '" . $data['note'] . "', '" . $data['file'] . "')");
+    $status = $wpdb->query("INSERT INTO $table (order_id, price, type_pcb, width, height, quantity, layers, type_order, dichte, dichte_done, distant, size_khoan, color, text_color, interface, test, note, file, thoi_gian_san_xuat) VALUES ('" . $data['order_id'] . "', " . $data['price'] . ", '" . $data['type_pcb'] . "', '" . $data['width'] . "', '" . $data['height'] . "', '" . $data['quantity'] . "', '" . $data['layers'] . "', '" . $data['type_order'] . "', '" . $data['dichte'] . "', '" . $data['dichte_done'] . "', '" . $data['distant'] . "', '" . $data['size_khoan'] . "', '" . $data['color'] . "', '" . $data['text_color'] . "', '" . $data['interface'] . "', '" . $data['test'] . "', '" . $data['note'] . "', '" . $data['file'] . "', '" . $data['thoi_gian_san_xuat'] . "')");
 
     if ($data['isStencil'] == 1) {
         $wpdb->query("UPDATE $table SET loai_stencil = '" . $data['stencil']['loai_stencil'] . "', danh_bong = '" . $data['stencil']['danh_bong'] . "', mat_stencil = '" . $data['stencil']['mat_stencil'] . "', kich_thuoc = '" . $data['stencil']['kich_thuoc'] . "', quantity_2 = '" .  $data['stencil']['quantity_2'] . "', do_day = '" . $data['stencil']['do_day']  . "', note_2 = '" .  $data['stencil']['note_2'] . "', isStencil = 1 WHERE order_id = '" . $data['order_id']  . "'");
@@ -483,39 +490,35 @@ function create_tables()
       `text_color` varchar(20) NOT NULL,
       `interface` varchar(30) NOT NULL,
       `test` varchar(30) NOT NULL,
-      `side` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `diem_han_smd` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `diem_han_dip` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `linh_kien_dan` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `linh_kien_gan` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `dong_goi` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `xac_nhan` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `height_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `width_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `loai_stencil` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `danh_bong` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `mat_stencil` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `kich_thuoc` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `quantity_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `do_day` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-      `note_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+      `side` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `diem_han_smd` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `diem_han_dip` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `linh_kien_dan` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `linh_kien_gan` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `dong_goi` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `xac_nhan` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `height_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `width_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `loai_stencil` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `danh_bong` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `mat_stencil` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `kich_thuoc` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `quantity_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `do_day` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `note_2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
       `note` text NOT NULL,
-      `isAssembly` tinyint(2) NOT NULL,
-      `isStencil` tinyint(2) NOT NULL,
-      `panel` tinyint(2) NOT NULL,
-      `col_panel` varchar(20) NOT NULL,
-      `row_panel` varchar(20) NOT NULL,
-      `vien` varchar(20) NOT NULL,
+      `isAssembly` tinyint(2) DEFAULT NULL,
+      `isStencil` tinyint(2) DEFAULT NULL,
+      `panel` tinyint(2) DEFAULT NULL,
+      `col_panel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `row_panel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `vien` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+      `thoi_gian_san_xuat` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
     
-    INSERT INTO `wp_machin_order_data` (`id`, `order_id`, `price`, `file`, `type_pcb`, `width`, `height`, `quantity`, `layers`, `type_order`, `dichte`, `dichte_done`, `distant`, `size_khoan`, `color`, `text_color`, `interface`, `test`, `side`, `diem_han_smd`, `diem_han_dip`, `linh_kien_dan`, `linh_kien_gan`, `dong_goi`, `xac_nhan`, `height_2`, `width_2`, `loai_stencil`, `danh_bong`, `mat_stencil`, `kich_thuoc`, `quantity_2`, `do_day`, `note_2`, `note`, `isAssembly`, `isStencil`, `panel`, `col_panel`, `row_panel`, `vien`) VALUES
-    (41,	'Oq6qxfiyye',	187,	'',	'1. FR-4',	'0',	'0',	'5',	'2',	'Đơn chiếc',	'1.6',	'1oz',	'7/8mil',	'0.3mm',	'Xanh lá',	'Trắng',	'HASL Lead Free',	'Kiểm tra bằng mắt thường',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	'',	'',	''),
-    (47,	'O8uw4w0pam',	525,	'',	'1. FR-4',	'0',	'0',	'5',	'2',	'Đơn chiếc',	'1.6',	'1oz',	'7/8mil',	'0.3mm',	'Xanh lá',	'Trắng',	'HASL Lead Free',	'Kiểm tra bằng mắt thường',	'Một mặt',	'1',	'1',	'1',	'1',	'Quấn xốp chung',	'Chụp ảnh để xác nhận trước khi',	'1',	'1',	'Có khung',	'YES',	'Top',	'--Chọn kích thước--',	'1',	'0.12mm',	'',	'',	1,	1,	0,	'',	'',	''),
-    (48,	'O7iruffzbf',	783,	'',	'1. FR-4',	'0',	'0',	'5',	'1',	'Panel',	'1.6',	'1oz',	'7/8mil',	'0.3mm',	'Xanh lá',	'Trắng',	'HASL Lead Free',	'Kiểm tra bằng mắt thường',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	'',	'',	''),
-    (49,	'Omk1o0ifz3',	539,	'2b6b7fcb-50f9-4926-a601-96d32786dad7-Led_40mm',	'1. FR-4',	'0',	'0',	'125',	'2',	'Panel',	'1.6',	'1oz',	'7/8mil',	'0.3mm',	'Xanh lá',	'Trắng',	'HASL Lead Free',	'Kiểm tra bằng mắt thường',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	1,	'1',	'1',	'Viền');
     
-    -- 2021-07-08 19:42:35";
+    -- 2021-10-03 10:17:10";
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);

@@ -99,7 +99,7 @@
     <div id="London" class="tabcontent">
         <form action="#" method="post">
             <div class="content">
-                <h3>Cài đặt chung (nghìn đồng)</h3>
+                <h3>Cài đặt chung (đồng)</h3>
                 <label>
                     Phone:
                     <input type="text" name="phonex" value="<?php echo $phonex ?>" />

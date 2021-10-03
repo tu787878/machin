@@ -118,29 +118,29 @@
     <div id="London" class="tabcontent">
         <form action="#" method="post">
             <div class="content">
-                <h3>Cài đặt chung (nghìn đồng)</h3>
+                <h3>Cài đặt chung (đồng)</h3>
                 <label>
-                    Phí setup 1 (nghìn đồng):
+                    Phí setup 1 (đồng):
                     <input type="text" name="setup_1" value="<?php echo $setup_1 ?>" />
                 </label>
                 <label>
-                    Phí setup 2 (nghìn đồng):
+                    Phí setup 2 (đồng):
                     <input type="text" name="setup_2" value="<?php echo $setup_2 ?>" />
                 </label>
                 <label>
-                    Phí setup 3 (nghìn đồng):
+                    Phí setup 3 (đồng):
                     <input type="text" name="setup_3" value="<?php echo $setup_3 ?>" />
                 </label>
                 <label>
-                    Phí setup 4 (nghìn đồng):
+                    Phí setup 4 (đồng):
                     <input type="text" name="setup_4" value="<?php echo $setup_4 ?>" />
                 </label>
                 <label>
-                    Tiền 1 điểm hàng SMD (nghìn đồng):
+                    Tiền 1 điểm hàng SMD (đồng):
                     <input type="text" name="tien_smd" value="<?php echo $tien_smd ?>" />
                 </label>
                 <label>
-                    Tiền 1 điểm hàng DIP (nghìn đồng):
+                    Tiền 1 điểm hàng DIP (đồng):
                     <input type="text" name="tien_dip" value="<?php echo $tien_dip ?>" />
                 </label>
                 <label>

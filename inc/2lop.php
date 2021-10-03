@@ -216,17 +216,17 @@
         <h3>Cài đặt riêng</h3>
         <form action="#" method="post">
             <label>
-                Tỉ lệ lợi nhuận (nghìn đồng):
+                Tỉ lệ lợi nhuận (đồng):
                 <input type="text" name="ti_le_loi_nhuan_2lop" value="<?php echo $ti_le_loi_nhuan_2lop ?>" />
             </label>
             <br>
             <label>
-             Giá mặc định hai cạnh dài rộng dưới 10cm - SL5 (nghìn đồng):
+             Giá mặc định hai cạnh dài rộng dưới 10cm - SL5 (đồng):
                 <input type="text" name="duoi_10_sl5_2lop" value="<?php echo $duoi_10_sl5_2lop ?>" />
             </label>
             <br>
             <label>
-             Giá mặc định hai cạnh dài rộng dưới 10cm - SL10 (nghìn đồng):
+             Giá mặc định hai cạnh dài rộng dưới 10cm - SL10 (đồng):
                 <input type="text" name="duoi_10_sl10_2lop" value="<?php echo $duoi_10_sl10_2lop ?>" />
             </label>
 
